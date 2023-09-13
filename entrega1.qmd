@@ -8,6 +8,40 @@ author:
   - Frank William Hammond Espinosa
 toc: TRUE
 lang: es
+warning: FALSE
 ---
 
-## Hola mundo
+Instalamos los paquetes que vamos a necesitar:
+
+```{r, eval=FALSE}
+install.packages("palmerpenguins")
+```
+
+## Exploración inicial y descripción de variables.
+
+En primer lugar, visualizaremos el conjunto de datos.
+
+```{r}
+library(palmerpenguins)
+str(penguins)
+```
+Vemos que hay 344 observaciones de 8 variables:
+
+- Especie, cualitativa nominal politómica.
+- Isla, cualitativa nominal politómica.
+- Longitud del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+- Profundidad del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+- Longitud de la aleta (en milímetros), cuantitativa continua (discretizada a los milímetros).
+- Peso (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
+- Sexo, cualitativa nominal dicotómica.
+- Año, 
+
+La unidad muestral de la tabla es un pingüino. Para comprobar que las variables están discretizadas a las unidades que afirmamos, sencillamente hemos observado a qué unidad están redondeadas, y para la variable de peso, hemos utilizado la siguiente instrucción:
+
+```{r}
+pesos=na.omit(penguins$body_mass_g)
+sum(pesos%%5)
+```
+Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
+
+
