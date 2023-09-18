@@ -15,6 +15,9 @@ Instalamos los paquetes que vamos a necesitar:
 
 ```{r, eval=FALSE}
 install.packages("palmerpenguins")
+install.packages("ggplot2")
+install.packages("stat_binhex")
+install.packages("corrplot")
 ```
 
 ## Exploración inicial y descripción de variables.
@@ -43,5 +46,104 @@ pesos=na.omit(penguins$body_mass_g)
 sum(pesos%%5)
 ```
 Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
+
+
+```{r}
+# Crea un objeto ggplot
+p <- ggplot(penguins, aes(x = penguins$species, y = penguins$bill_length_mm)) +
+  geom_boxplot() +
+  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
+       title = "Longitud del Pico por Especie de Pingüino")
+print(p)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = penguins$bill_length_mm, y = penguins$flipper_length_mm, color = species)) +
+  geom_point() + 
+  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
+       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino")
+print(p)
+```
+```{r}
+p <- ggplot(penguins, aes(x = species)) +
+  geom_bar() +
+  labs(x = "Especie de Pingüino", y = "Frecuencia",
+       title = "Gráfico de Barras de la Distribución de Especies")
+
+print(p)
+```
+```{r}
+p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
+  geom_violin() +
+  labs(x = "Especie de Pingüino", y = "Longitud de la Aleta (mm)",
+       title = "Diagrama de Violín de la Longitud de la Aleta por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
+
+print(p)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = year, y = flipper_length_mm, color = species)) +
+  geom_line() +
+  labs(x = "Año", y = "Longitud de la Aleta (mm)",
+       title = "Evolución de la Longitud de la Aleta por Especie de Pingüino")
+
+print(p)
+```
+```{r}
+p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = sex)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Especie de Pingüino", y = "Longitud de la Aleta (mm)",
+       title = "Gráfico de Barras Apiladas de la Longitud de la Aleta por Género") +
+  scale_fill_brewer(palette = "Set3")
+
+print(p)
+```
+```{r}
+p <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_hex() +
+  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
+       title = "Dispersión de la Longitud del Pico y de la Aleta")
+
+print(p)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = "", fill = sex)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  facet_wrap(~species) +
+  labs(x = NULL, y = NULL,
+       title = " Proporción de Género por Especie de Pingüino") +
+  theme_void() +
+  scale_fill_brewer(palette = "Set2")
+
+print(p)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(x = "Longitud del Pico (mm)", y = "Masa Corporal (g)",
+       title = "Longitud del Pico y Masa Corporal por Especie de Pingüino") +
+  scale_color_brewer(palette = "Set1")
+
+print(p)
+```
+
+```{r}
+library(ggplot2)
+
+p <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, size = bill_length_mm, color = species)) +
+  geom_point(alpha = 0.7) +
+  scale_size_continuous(range = c(3, 10)) +
+  labs(x = "Longitud de la Aleta (mm)", y = "Peso Corporal (g)",
+       title = "Longitud de Aleta vs. Peso Corporal vs. Tamaño del Pico por Especie de Pingüino")
+
+print(p)
+```
+
+
 
 
