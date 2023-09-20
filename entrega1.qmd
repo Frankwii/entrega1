@@ -30,14 +30,14 @@ str(penguins)
 ```
 Vemos que hay 344 observaciones de 8 variables:
 
-- Especie, cualitativa nominal politómica.
-- Isla, cualitativa nominal politómica.
-- Longitud del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
-- Profundidad del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
-- Longitud de la aleta (en milímetros), cuantitativa continua (discretizada a los milímetros).
-- Peso (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
-- Sexo, cualitativa nominal dicotómica.
-- Año, 
+- **Especie**, cualitativa nominal politómica.
+- **Isla**, cualitativa nominal politómica.
+- **Longitud del pico** (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+- **Profundidad del pico** (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+- **Longitud de la aleta** (en milímetros), cuantitativa continua (discretizada a los milímetros).
+- **Peso** (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
+- **Sexo**, cualitativa nominal dicotómica.
+- **Año**, 
 
 La unidad muestral de la tabla es un pingüino. Para comprobar que las variables están discretizadas a las unidades que afirmamos, sencillamente hemos observado a qué unidad están redondeadas, y para la variable de peso, hemos utilizado la siguiente instrucción:
 
@@ -52,6 +52,177 @@ library(ggplot2)
 species_colors = c("orange", "purple", "darkcyan")
 ```
 
+## Descripción de las variables
+
+### Especie
+
+Esta variable es cualitativa nominal polinómica con tres niveles: Adelie, Chinstrap y Gentoo.
+
+```{r}
+table(penguins$species)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x=species, fill=species)) +
+  geom_bar() +
+  labs(x = "Especie de Pingüino", y = "Frecuencia",
+       title = "Frecuencias de las Especies de Pingüino") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position="none")
+print(p)
+```
+
+
+### Isla
+
+Esta variable es cualitativa nominal polinómica con tres niveles: Biscoe, Dream y Torgersen.
+
+```{r}
+table(penguins$island)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x=island, fill=island)) +
+  geom_bar() +
+  labs(x = "Isla", y = "Frecuencia",
+       title = "Poblaciones de las Islas") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position="none")
+print(p)
+```
+
+### Longitud del pico
+
+Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
+
+```{r}
+summary(penguins$bill_length_mm)
+sd(penguins$bill_length_mm, na.rm = TRUE)
+```
+
+Tenemos que la media de la longitud del pico para la población total es de unos 43.92 mm con una desviación típica de 5.46 mm.
+
+
+
+### Profundidad del pico
+
+Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
+
+```{r}
+summary(penguins$bill_depth_mm)
+sd(penguins$bill_depth_mm, na.rm = TRUE)
+```
+
+Tenemos que la media de la profundidad del pico para la población total es de unos 17.15 mm con una desviación típica de 1.97 mm.
+
+
+
+### Longitud de la aleta
+
+Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
+
+```{r}
+summary(penguins$flipper_length_mm)
+sd(penguins$flipper_length_mm, na.rm = TRUE)
+```
+
+Tenemos que la media de la longitud del pico para la población total es de unos 197 mm con una desviación típica de 14 mm.
+
+
+
+### Peso
+
+Esta variable es cuantitativa contínua (discretizada a múltiplos de 5 gramos).
+
+```{r}
+summary(penguins$body_mass_g)
+sd(penguins$body_mass_g, na.rm = TRUE)
+```
+
+Tenemos que la media de la profundidad del pico para la población total es de unos 4.2 kg con una desviación típica de 0.8 kg.
+
+### Sexo
+
+Esta variable es cualitativa nominal dicotómica.
+
+```{r}
+table(penguins$sex)
+```
+
+```{r}
+p <- ggplot(na.omit(penguins), aes(x=sex, fill=sex)) +
+  geom_bar() +
+  labs(x = "Sexo", y = "Frecuencia",
+       title = "Frecuencias del Sexo del Pingüino") +
+  theme(legend.position="none")
+print(p)
+```
+
+
+### Año
+
+Esta variable es cualitativa e indica el año en el que se produjo el estudio:
+
+```{r}
+table(penguins$year)
+```
+
+```{r, echo=FALSE}
+p <- ggplot(penguins, aes(x=year)) +
+  geom_bar() +
+  labs(x = "Año", y = "Frecuencia") +
+  theme(legend.position="none")
+print(p)
+```
+
+
+
+## Comparación de las variables cuantitativas según la especie
+
+```{r, echo=FALSE}
+p <- ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
+       title = "Diagrama de Violín de la Longitud del Pico por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
+
+print(p)
+```
+
+```{r, echo=FALSE}
+p <- ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
+       title = "Diagrama de Violín de la Profundidad del Pico por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
+
+print(p)
+```
+
+```{r, echo=FALSE}
+p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
+       title = "Diagrama de Violín de la Longitud de la aleta por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
+
+print(p)
+```
+
+```{r, echo=FALSE}
+p <- ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Peso (g)",
+       title = "Diagrama de Violín del Peso por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
+
+print(p)
+```
+
 Veamos en qué islas habitan principalmente las tres especies:
 
 ```{r}
@@ -62,8 +233,13 @@ p <- ggplot(penguins, aes(fill=island, x=species)) +
 print(p)
 ```
 
-Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está sólo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y es la que tiene una mayor población de pingüinos.
+Se puede observar que en función de la isla que tratemos, habitan más pingüinos de una especie u otra:
 
+-   En la isla de **Biscoe** habitan todos los pingüinos de la especie Gentoo y también hay algunos de la especie Adelie, pero no hay de la especie Chinstrap.
+
+-   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
+
+-   Finalmente, en la isla de **Torgersen** sólo habitan pingüinos de la especie Adelie.
 
 ```{r}
 # Crea un objeto ggplot
