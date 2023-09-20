@@ -46,34 +46,28 @@ Vemos que hay 344 observaciones de 8 variables:
 Hemos visto ya en la descripción del tibble que hay tres especies de pingüino. Para ver qué especies son y cuántos ejemplares hay de cada una, utilizamos el siguiente codigo.
 
 ```{r}
-table(penguins$species)
+x=table(penguins$species)
+c(x,"Total no NA"=sum(x,na.rm=TRUE))
 ```
-Observamos, entonces, que hay tres especies distintas de pingüinos. De más a menos común son *Adelie*, *Chisntrap* y *Gentoo*. De manera más visual, tenemos el siguiente gráfico:
-
-```{r}
-# habria que cambiar los colores
-colores<-c("red", "green", "blue")
-
-ggplot(penguins, aes(x=as.factor(species), fill=as.factor(species))) +
-  geom_bar() +
-  scale_fill_manual(values = colores ) +
-  theme(legend.position="none")
-
-
-```
-
+Por tanto, de más a menos común, hay pingüinos de las especies *Adelie*, *Gentoo* y *Chinstrap*.
 
 -   Isla, cualitativa nominal politómica.
 
 ```{r}
-
+x=table(penguins$island)
+c(x,"Total_noNA"=sum(x,na.rm=TRUE))
 ```
+De más a menos cantidad, hay pingüinos en las islas *Biscoe*, *Dream* y *Torgersen*.
+
 
 -   Longitud del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
 
-```{r}
-
+```{r, echo=FALSE}
+estadisticos=summary(penguins$bill_length_mm)
+estadisticos
 ```
+
+"El pico más corto mide r{estadisticos[1]} milímetros, y el más largo `r estadisticos[6]` milímetros. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r tadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA."
 
 -   Profundidad del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
 
