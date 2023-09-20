@@ -47,6 +47,23 @@ sum(pesos%%5)
 ```
 Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
 
+```{r}
+library(ggplot2)
+species_colors = c("orange", "purple", "darkcyan")
+```
+
+Veamos en qué islas habitan principalmente las tres especies:
+
+```{r}
+p <- ggplot(penguins, aes(fill=island, x=species)) +
+  geom_bar() +
+  labs(x = "Especie de Pingüino", y = "Frecuencia",
+       title = "Distribución de la población por isla y especie")
+print(p)
+```
+
+Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está sólo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y es la que tiene una mayor población de pingüinos.
+
 
 ```{r}
 # Crea un objeto ggplot
@@ -56,12 +73,14 @@ p <- ggplot(penguins, aes(x = penguins$species, y = penguins$bill_length_mm)) +
        title = "Longitud del Pico por Especie de Pingüino")
 print(p)
 ```
+En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
 
 ```{r}
 p <- ggplot(penguins, aes(x = penguins$bill_length_mm, y = penguins$flipper_length_mm, color = species)) +
   geom_point() + 
   labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino")
+       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
+  scale_color_manual(values=species_colors)
 print(p)
 ```
 ```{r}
@@ -127,7 +146,18 @@ p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   labs(x = "Longitud del Pico (mm)", y = "Masa Corporal (g)",
        title = "Longitud del Pico y Masa Corporal por Especie de Pingüino") +
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set2")
+
+print(p)
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)",
+       title = "Dimensiones del Pico por Especie de Pingüino") +
+  scale_color_brewer(palette = "Set2")
 
 print(p)
 ```
@@ -143,6 +173,8 @@ p <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, size = bill_le
 
 print(p)
 ```
+
+Tenemos que la especie Gentoo tiene de media una aleta más larga y pesa más que la mayoría de ejemplares de las dos especies restantes.
 
 
 
