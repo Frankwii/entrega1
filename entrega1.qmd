@@ -67,36 +67,49 @@ estadisticos=summary(penguins$bill_length_mm)
 estadisticos
 ```
 
-"El pico más corto mide r{estadisticos[1]} milímetros, y el más largo `r estadisticos[6]` milímetros. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r tadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA."
+El pico más corto mide `r estadisticos[1]` milímetros, y el más largo, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
 -   Profundidad del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
 
-```{r}
-
+```{r, echo=FALSE}
+estadisticos=summary(penguins$bill_depth_mm)
+estadisticos
 ```
+
+El pico más fino mide `r estadisticos[1]` milímetros, y el más grueso, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
 -   Longitud de la aleta (en milímetros), cuantitativa continua (discretizada a los milímetros).
 
-```{r}
-
+```{r, echo=FALSE}
+estadisticos=summary(penguins$flipper_length_mm)
+estadisticos
 ```
+
+La aleta más corta mide `r estadisticos[1]` milímetros, y la más larga, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+
 
 -   Peso (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
 
-```{r}
-
+```{r, echo=FALSE}
+estadisticos=summary(penguins$body_mass_g)
+estadisticos
 ```
+
+El pingüino más liviano pesa `r estadisticos[1]` gramos, y el más pesado, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+
 
 -   Sexo, cualitativa nominal dicotómica.
 
 ```{r}
-
+x=table(penguins$sex)
+c(x,"Total no NA"=sum(x,na.rm=TRUE))
 ```
 
 -   Año, ordinal.
 
 ```{r}
-
+x=table(penguins$year)
+c(x,"Total no NA"=sum(x,na.rm=TRUE))
 ```
 
 =======
