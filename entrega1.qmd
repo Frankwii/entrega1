@@ -450,6 +450,58 @@ print(p)
 ```
 
 Tenemos que la especie Gentoo tiene de media una aleta más larga y pesa más que la mayoría de ejemplares de las dos especies restantes.
+
+```{r}
+
+p <- ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar() +
+  labs(x = "Isla", y = "Número de Especies",
+       title = "Número de Especies por Isla") +
+  scale_fill_brewer(palette = "Set2")
+
+print(p)
+```
+```{r}
+library(ggplot2)
+
+p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
+  geom_point() +
+  labs(x = "Año", y = "Peso Corporal (g)",
+       title = " Año vs. Peso Corporal de Pingüinos")
+
+print(p)
+```
+
+```{r}
+library(ggplot2)
+
+p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
+  geom_bar(stat = "summary", fun = "mean", fill = "skyblue") +
+  labs(x = "Año", y = "Peso Corporal Promedio (g)",
+       title = "Peso Corporal Promedio de Pingüinos por Año")
+
+print(p)
+```
+FRANK LO DE LOS PESOS UNA MIERDA QUITALO
+
+```{r}
+library(ggplot2)
+
+p <- ggplot(penguins, aes(x = interaction(species, island), y = bill_length_mm)) +
+  geom_bar(stat = "summary", fun = "mean", fill = "skyblue", position = "dodge") +
+  labs(x = "Especie e Isla", y = "Longitud del Pico Promedio (mm)",
+       title = "Longitud del Pico Promedio por Combinación de Especie e Isla") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+print(p)
+```
+
+```{r}
+#Para poder la foto:
+#descarga la foto y pollo en el directori del cartografia
+# instruccion:  ![Descripcion que quieras]{ruta}
+```
+
 <<<<<<< HEAD
 =======
 
