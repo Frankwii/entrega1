@@ -41,7 +41,9 @@ nrows=nrow(penguins)
 
 Vemos que hay 344 observaciones de 8 variables:
 
--   Especie, cualitativa nominal politómica.
+### Especie
+
+Esta variable es cualitativa nominal politómica.
 
 Hemos visto ya en la descripción del tibble que hay tres especies de pingüino. Para ver qué especies son y cuántos ejemplares hay de cada una, utilizamos el siguiente codigo.
 
@@ -51,7 +53,9 @@ c(x,"NA's"=sum(is.na(penguins$species)))
 ```
 Por tanto, de más a menos común, hay pingüinos de las especies *Adelie*, *Gentoo* y *Chinstrap*.
 
--   Isla, cualitativa nominal politómica.
+###  Isla
+
+Esta variable es cualitativa nominal politómica.
 
 ```{r}
 x=table(penguins$island)
@@ -60,8 +64,11 @@ c(x,"NA's"=sum(is.na(penguins$islands)))
 De más a menos cantidad, hay pingüinos en las islas *Biscoe*, *Dream* y *Torgersen*.
 
 
--   Longitud del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+###   Longitud del pico
 
+Es cuantitativa continua, está expresada en milímetros y discretizada a las décimas ($10^{-4}$ metros).
+
+Veamos los estadísticos estándares de esta variable:
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$bill_length_mm)
 estadisticos
@@ -69,7 +76,9 @@ estadisticos
 
 El pico más corto mide `r estadisticos[1]` milímetros, y el más largo, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
--   Profundidad del pico (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
+###   Profundidad del pico
+
+Es cuantitativa continua, está expresada en milímetros y discretizada a las décimas ($10^{-4}$ metros).
 
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$bill_depth_mm)
@@ -78,8 +87,11 @@ estadisticos
 
 El pico más fino mide `r estadisticos[1]` milímetros, y el más grueso, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
--   Longitud de la aleta (en milímetros), cuantitativa continua (discretizada a los milímetros).
+###   Longitud de la aleta
 
+Es cuantitativa continua, está expresada en milímetros y discretizada a las unidades ($10^{-3}$ metros).
+
+Veamos los estadísticos estándares de esta variable:
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$flipper_length_mm)
 estadisticos
@@ -88,7 +100,18 @@ estadisticos
 La aleta más corta mide `r estadisticos[1]` milímetros, y la más larga, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
 
--   Peso (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
+###   Peso
+
+Es cuantitativa continua, está expresada en gramos y discretizada a los múltiplos de 5 gramos. Para ver que, efectivamente, esa es la discretización, hemos utilizado el siguiente código:
+
+```{r, echo=TRUE}
+pesos=na.omit(penguins$body_mass_g)
+sum(pesos%%5)
+```
+
+Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
+
+Veamos los estadísticos estándares de esta variable:
 
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$body_mass_g)
@@ -98,235 +121,89 @@ estadisticos
 El pingüino más liviano pesa `r estadisticos[1]` gramos, y el más pesado, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
 
--   Sexo, cualitativa nominal dicotómica.
+###   Sexo
+
+Esta variable es cualitativa nominal dicotómica.
 
 ```{r}
 x=table(penguins$sex)
 c(x,"NA's"=sum(is.na(penguins$sex)))
 ```
 
--   Año, ordinal.
+###   Año
+
+Esta variable es ordinal, pero R asigna a esta variable el tipo `int`, pues sus valores son números enteros. En realidad se trata de un factor ordenado. Podemos arreglar esto con el siguiente código:
+
+```{r}
+penguins$year=factor(penguins$year, ordered=TRUE)
+penguins %>% str
+```
+Ahora sí tiene el tipo adecuado.
 
 ```{r}
 x=table(penguins$year)
 c(x,"NA's"=sum(is.na(penguins$year)))
 ```
 
-<<<<<<< HEAD
-=======
-- **Especie**, cualitativa nominal politómica.
-- **Isla**, cualitativa nominal politómica.
-- **Longitud del pico** (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
-- **Profundidad del pico** (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
-- **Longitud de la aleta** (en milímetros), cuantitativa continua (discretizada a los milímetros).
-- **Peso** (en gramos), cuantitativa continua (discretizada a los múltiplos de $5$ gramos).
-- **Sexo**, cualitativa nominal dicotómica.
-- **Año**, 
-
->>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
-La unidad muestral de la tabla es un pingüino. Para comprobar que las variables están discretizadas a las unidades que afirmamos, sencillamente hemos observado a qué unidad están redondeadas, y para la variable de peso, hemos utilizado la siguiente instrucción:
-
-```{r}
-pesos=na.omit(penguins$body_mass_g)
-sum(pesos%%5)
-```
-
-Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
+La unidad muestral de la tabla es un pingüino.
 
 ```{r}
 library(ggplot2)
 species_colors = c("orange", "purple", "darkcyan")
 ```
 
-## Descripción de las variables
-
-### Especie
-
-Esta variable es cualitativa nominal polinómica con tres niveles: Adelie, Chinstrap y Gentoo.
-
-```{r}
-table(penguins$species)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x=species, fill=species)) +
-  geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia",
-       title = "Frecuencias de las Especies de Pingüino") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme(legend.position="none")
-print(p)
-```
-
-
-### Isla
-
-Esta variable es cualitativa nominal polinómica con tres niveles: Biscoe, Dream y Torgersen.
-
-```{r}
-table(penguins$island)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x=island, fill=island)) +
-  geom_bar() +
-  labs(x = "Isla", y = "Frecuencia",
-       title = "Poblaciones de las Islas") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme(legend.position="none")
-print(p)
-```
-
-### Longitud del pico
-
-Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
-
-```{r}
-summary(penguins$bill_length_mm)
-sd(penguins$bill_length_mm, na.rm = TRUE)
-```
-
-Tenemos que la media de la longitud del pico para la población total es de unos 43.92 mm con una desviación típica de 5.46 mm.
-
-
-
-### Profundidad del pico
-
-Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
-
-```{r}
-summary(penguins$bill_depth_mm)
-sd(penguins$bill_depth_mm, na.rm = TRUE)
-```
-
-Tenemos que la media de la profundidad del pico para la población total es de unos 17.15 mm con una desviación típica de 1.97 mm.
-
-
-
-### Longitud de la aleta
-
-Esta variable es cuantitativa contínua (discretizada a $10^{-4}$ metros).
-
-```{r}
-summary(penguins$flipper_length_mm)
-sd(penguins$flipper_length_mm, na.rm = TRUE)
-```
-
-Tenemos que la media de la longitud del pico para la población total es de unos 197 mm con una desviación típica de 14 mm.
-
-
-
-### Peso
-
-Esta variable es cuantitativa contínua (discretizada a múltiplos de 5 gramos).
-
-```{r}
-summary(penguins$body_mass_g)
-sd(penguins$body_mass_g, na.rm = TRUE)
-```
-
-Tenemos que la media de la profundidad del pico para la población total es de unos 4.2 kg con una desviación típica de 0.8 kg.
-
-### Sexo
-
-Esta variable es cualitativa nominal dicotómica.
-
-```{r}
-table(penguins$sex)
-```
-
-```{r}
-p <- ggplot(na.omit(penguins), aes(x=sex, fill=sex)) +
-  geom_bar() +
-  labs(x = "Sexo", y = "Frecuencia",
-       title = "Frecuencias del Sexo del Pingüino") +
-  theme(legend.position="none")
-print(p)
-```
-
-
-### Año
-
-Esta variable es cualitativa e indica el año en el que se produjo el estudio:
-
-```{r}
-table(penguins$year)
-```
-
-```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x=year)) +
-  geom_bar() +
-  labs(x = "Año", y = "Frecuencia") +
-  theme(legend.position="none")
-print(p)
-```
-
-
 
 ## Comparación de las variables cuantitativas según la especie
 
-:::{layout-ncol=2}
-
 ```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
+
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Diagrama de Violín de la Longitud del Pico por Especie de Pingüino") +
+       title = "Longitud del Pico por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
-       title = "Diagrama de Violín de la Profundidad del Pico por Especie de Pingüino") +
+       title = "Profundidad del Pico por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
+ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
-       title = "Diagrama de Violín de la Longitud de la aleta por Especie de Pingüino") +
+       title = "Longitud de la aleta por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Peso (g)",
-       title = "Diagrama de Violín del Peso por Especie de Pingüino") +
+       title = "Peso por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
-<<<<<<< HEAD
-=======
-:::
+## Distribución de pingüinos según la isla
 
->>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
 Veamos en qué islas habitan principalmente las tres especies:
 
 ```{r}
-p <- ggplot(penguins, aes(fill=island, x=species)) +
+ggplot(penguins, aes(fill=island, x=species)) +
   geom_bar() +
   labs(x = "Especie de Pingüino", y = "Frecuencia",
        title = "Distribución de la población por isla y especie")
-print(p)
 ```
 
-Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está sólo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y es la que tiene una mayor población de pingüinos.
+Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está solo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y, como ya sabíamos, es la que tiene una mayor población total de pingüinos.
 
 Se puede observar que en función de la isla que tratemos, habitan más pingüinos de una especie u otra:
 
@@ -334,75 +211,17 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 
 -   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
 
--   Finalmente, en la isla de **Torgersen** sólo habitan pingüinos de la especie Adelie.
+-   Finalmente, en la isla de **Torgersen** solo habitan pingüinos de la especie Adelie.
 
 ```{r}
-# Crea un objeto ggplot
-p <- ggplot(penguins, aes(x = penguins$species, y = penguins$bill_length_mm)) +
-  geom_boxplot() +
-  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Longitud del Pico por Especie de Pingüino")
-print(p)
-```
-En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
-
-En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
-
-```{r}
-p <- ggplot(penguins, aes(x = penguins$bill_length_mm, y = penguins$flipper_length_mm, color = species)) +
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point() + 
   labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
        title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
   scale_color_manual(values=species_colors)
-print(p)
 ```
 
-```{r}
-p <- ggplot(penguins, aes(x = species)) +
-  geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia",
-       title = "Gráfico de Barras de la Distribución de Especies")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
-  geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Longitud de la Aleta (mm)",
-       title = "Diagrama de Violín de la Longitud de la Aleta por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = year, y = flipper_length_mm, color = species)) +
-  geom_line() +
-  labs(x = "Año", y = "Longitud de la Aleta (mm)",
-       title = "Evolución de la Longitud de la Aleta por Especie de Pingüino")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = sex)) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Especie de Pingüino", y = "Longitud de la Aleta (mm)",
-       title = "Gráfico de Barras Apiladas de la Longitud de la Aleta por Género") +
-  scale_fill_brewer(palette = "Set3")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
-  geom_hex() +
-  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Dispersión de la Longitud del Pico y de la Aleta")
-
-print(p)
-```
+  
 
 ```{r}
 p <- ggplot(penguins, aes(x = "", fill = sex)) +
@@ -420,7 +239,6 @@ print(p)
 ```{r}
 p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species)) +
-  geom_smooth(method = "lm", se = FALSE, color = "black") +
   labs(x = "Longitud del Pico (mm)", y = "Masa Corporal (g)",
        title = "Longitud del Pico y Masa Corporal por Especie de Pingüino") +
   scale_color_brewer(palette = "Set2")
@@ -439,54 +257,31 @@ p <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species
 print(p)
 ```
 
-```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, size = bill_length_mm, color = species)) +
-  geom_point(alpha = 0.7) +
-  scale_size_continuous(range = c(3, 10)) +
-  labs(x = "Longitud de la Aleta (mm)", y = "Peso Corporal (g)",
-       title = "Longitud de Aleta vs. Peso Corporal vs. Tamaño del Pico por Especie de Pingüino")
-
-print(p)
-```
-
-Tenemos que la especie Gentoo tiene de media una aleta más larga y pesa más que la mayoría de ejemplares de las dos especies restantes.
-<<<<<<< HEAD
-=======
 
 ```{r}
-
-p <- ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar() +
-  labs(x = "Isla", y = "Número de Especies",
-       title = "Número de Especies por Isla") +
-  scale_fill_brewer(palette = "Set2")
-
-print(p)
-```
-```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
-  geom_point() +
+ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
+  geom_violin() +
   labs(x = "Año", y = "Peso Corporal (g)",
-       title = " Año vs. Peso Corporal de Pingüinos")
-
-print(p)
+       title = " Año vs. Peso Corporal de Pingüinos") +
+  scale_fill_brewer(palette = "Set2")
 ```
 
-```{r}
-library(ggplot2)
 
-p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
-  geom_bar(stat = "summary", fun = "mean", fill = "skyblue") +
+```{r}
+ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
+  geom_violin() +
   labs(x = "Año", y = "Peso Corporal Promedio (g)",
        title = "Peso Corporal Promedio de Pingüinos por Año")
 
 print(p)
+
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Peso (g)",
+       title = "Peso por Especie de Pingüino") +
+  scale_fill_brewer(palette = "Dark2")
 ```
-FRANK LO DE LOS PESOS UNA MIERDA QUITALO
 
 ```{r}
 library(ggplot2)
@@ -506,5 +301,3 @@ print(p)
 # instruccion:  ![Descripcion que quieras]{ruta}
 ```
 
-
->>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
