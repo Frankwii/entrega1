@@ -20,14 +20,15 @@ install.packages("stat_binhex")
 install.packages("corrplot")
 install.packages("tidyr")
 ```
+
 ```{r}
 library(palmerpenguins)
 library(ggplot2)
-#library(stat_binhex)
 library(corrplot)
 library(tidyr)
-```
 
+species_colors = c("orange", "purple", "darkcyan")
+```
 
 ## Exploración inicial y descripción de variables.
 
@@ -36,39 +37,51 @@ En primer lugar, visualizaremos el conjunto de datos.
 ```{r}
 library(palmerpenguins)
 str(penguins)
-nrows=nrow(penguins)
+nrows<-nrow(penguins)
 ```
 
-Vemos que hay 344 observaciones de 8 variables:
+El estudio se realizó escogiendo datos de tres especies distintas de pingüino en tres islas distintas del archipiélago Palmer, en la Antártida. Por tanto, la unidad muestral de la tabla es un pingüino.
+
+Hay 344 observaciones de 8 variables, que son, por orden de aparición en el código anterior:
 
 ### Especie
 
-Esta variable es cualitativa nominal politómica.
+Esta variable registra la especie del ejemplar. Es cualitativa nominal politómica.
 
-Hemos visto ya en la descripción del tibble que hay tres especies de pingüino. Para ver qué especies son y cuántos ejemplares hay de cada una, utilizamos el siguiente codigo.
+Hemos visto ya en la descripción del tibble que hay tres especies de pingüino. Para ver qué especies son y cuántos ejemplares hay de cada una, utilizamos el siguiente codigo:
 
 ```{r}
 x=table(penguins$species)
 c(x,"NA's"=sum(is.na(penguins$species)))
 ```
-Por tanto, de más a menos común, hay pingüinos de las especies *Adelie*, *Gentoo* y *Chinstrap*.
 
-###  Isla
+Por tanto, de más a menos común, hay pingüinos de las especies *Adelie*, *Gentoo* y *Chinstrap*. No hay pingüinos sin clasificar por su especie.
 
-Esta variable es cualitativa nominal politómica.
+### Isla
+
+Esta variable registra la isla en la que fue encontrado el ejemplar. Es cualitativa nominal politómica.
 
 ```{r}
 x=table(penguins$island)
-c(x,"NA's"=sum(is.na(penguins$islands)))
+c(x,"NA's"=sum(is.na(x)))
 ```
-De más a menos cantidad, hay pingüinos en las islas *Biscoe*, *Dream* y *Torgersen*.
 
+De más a menos cantidad, hay pingüinos en las islas *Biscoe*, *Dream* y *Torgersen*. Tampoco hay ejemplares sin isla registrada.
 
-###   Longitud del pico
+### Longitud del pico
+
+Tanto esta variable como la siguiente en la lista se explican de manera sencilla con la siguiente ilustración:
+
+:::
+
+!\[AAAAAA\]{Explicacion_dimensiones_pico.png}
+
+:::
 
 Es cuantitativa continua, está expresada en milímetros y discretizada a las décimas ($10^{-4}$ metros).
 
-Veamos los estadísticos estándares de esta variable:
+Veamos los estadísticos más comunes de esta variable:
+
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$bill_length_mm)
 estadisticos
@@ -76,7 +89,7 @@ estadisticos
 
 El pico más corto mide `r estadisticos[1]` milímetros, y el más largo, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
-###   Profundidad del pico
+### Profundidad del pico
 
 Es cuantitativa continua, está expresada en milímetros y discretizada a las décimas ($10^{-4}$ metros).
 
@@ -87,11 +100,10 @@ estadisticos
 
 El pico más fino mide `r estadisticos[1]` milímetros, y el más grueso, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
-###   Longitud de la aleta
+### Longitud de la aleta
 
-Es cuantitativa continua, está expresada en milímetros y discretizada a las unidades ($10^{-3}$ metros).
+El nombre de la variable explica claramente qué representa. Es cuantitativa continua, está expresada en milímetros y discretizada a las unidades ($10^{-3}$ metros).
 
-Veamos los estadísticos estándares de esta variable:
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$flipper_length_mm)
 estadisticos
@@ -99,8 +111,7 @@ estadisticos
 
 La aleta más corta mide `r estadisticos[1]` milímetros, y la más larga, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
-
-###   Peso
+### Peso
 
 Es cuantitativa continua, está expresada en gramos y discretizada a los múltiplos de 5 gramos. Para ver que, efectivamente, esa es la discretización, hemos utilizado el siguiente código:
 
@@ -111,7 +122,7 @@ sum(pesos%%5)
 
 Deducimos que no hay ningún dato que no sea múltiplo de 5 (si hubiese alguno, la suma sería $>0$).
 
-Veamos los estadísticos estándares de esta variable:
+Ahora veamos algunos estadísticos de esta variable:
 
 ```{r, echo=FALSE}
 estadisticos=summary(penguins$body_mass_g)
@@ -120,36 +131,29 @@ estadisticos
 
 El pingüino más liviano pesa `r estadisticos[1]` gramos, y el más pesado, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
 
+### Sexo
 
-###   Sexo
-
-Esta variable es cualitativa nominal dicotómica.
+Registra si el pingüino es macho o hembra, salvo en algunos casos en los que no se determinó. Es cualitativa nominal dicotómica.
 
 ```{r}
 x=table(penguins$sex)
 c(x,"NA's"=sum(is.na(penguins$sex)))
 ```
 
-###   Año
+### Año
 
-Esta variable es ordinal, pero R asigna a esta variable el tipo `int`, pues sus valores son números enteros. En realidad se trata de un factor ordenado. Podemos arreglar esto con el siguiente código:
+El año en el que se realizó el registro del pingüino. Esta variable es ordinal, pero R asigna a esta variable el tipo `int`, pues sus valores son números enteros. En realidad se trata de un factor ordenado. Podemos arreglar esto con el siguiente código:
 
 ```{r}
 penguins$year=factor(penguins$year, ordered=TRUE)
 penguins %>% str
 ```
+
 Ahora sí tiene el tipo adecuado.
 
 ```{r}
 x=table(penguins$year)
 c(x,"NA's"=sum(is.na(penguins$year)))
-```
-
-La unidad muestral de la tabla es un pingüino.
-
-```{r}
-library(ggplot2)
-species_colors = c("orange", "purple", "darkcyan")
 ```
 
 ## Cruces de variables cualitativas con cuantitativas
@@ -160,9 +164,8 @@ En primer lugar, consideramos que puede ser interesante comparar las distintas m
 
 Para realizar esta comparación, utilizaremos una gráfica de violín para cada una de las variables cualitativas.
 
-:::{layout-ncol=2}
+::: {layout-ncol="2"}
 ```{r, echo=FALSE}
-
 ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
@@ -196,8 +199,8 @@ ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
 ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Peso (g)",
-       title = "Peso por Especie de pingüino") +
+  labs(x = "Especie de Pingüino", y = "Masa corporal (g)",
+       title = "Masa corporal por Especie de pingüino") +
   scale_fill_brewer(palette = "Dark2")+
   guides(fill=guide_legend(title="Especie"))
 ```
@@ -205,8 +208,8 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 
 En estos gráficos observamos un patrón común: Para cada medida, dos especies de pingüino suelen tener una distribución parecida, y la tercera es visiblemente distinta. Concretamente:
 
-- Los pingüinos Adelie son, con diferencia, los que tienen el pico más corto.
-- Los Gentoo tienen, notablemente, el pico más fino, la aleta más larga y el mayor peso.
+-   Los pingüinos Adelie son, con diferencia, los que tienen el pico más corto.
+-   Los Gentoo tienen, notablemente, el pico más fino, la aleta más larga y el mayor peso.
 
 Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie.
 
@@ -220,13 +223,110 @@ Una vez visualizadas individualmente, puede ser interesante intentar, por un lad
 ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
+  labs(x = "Longitud del Pico (mm)", y = "Profundidad del pico (mm)",
+       title = "Profundidad del pico según su longitud, por especie") +
   scale_color_manual(values=species_colors)
 ```
 
+Vemos que los datos están bastante agrupados en el sentido que, dada una longitud y profundidad de pico, es posible inferir a qué especie de pingüino pertenece el hipotético espécimen: los Gentoo tienen el pico más largo y fino; los Adelie, más grueso y corto; y los Chinstrap se encuentran en un punto intermedio. Además, salvo en los pingüinos Adelie, los datos se ajustan medianamente bien a la recta de regresión de su especie.
 
-Vemos que los datos están bastante agrupados en el sentido que, dado una longitud y 
+Además de esta gráfica, es posible hacer ${4}\choose{2} =6$ gráficos similares (en el sentido de explicar una medida en función de la otra), pero por motivos de brevedad representaremos únicamente la longitud de la aleta en función del peso.
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, color = species)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Masa corporal (g)", y = "Longitud de la aleta (mm)",
+       title = "Longitud de la aleta según masa corporal, por especie") +
+  scale_color_manual(values=species_colors)
+```
+
+Observamos que, con estas variables, es difícil diferenciar a los Adelie de los Chinstrap, pero los Gentoo son claramente distintos, pues tienen, sensiblemente, la aleta más larga y una masa corporal mayor. De nuevo, excepto para los Adelie, los datos se ajustan medianamente bien a la recta de regresión.
+
+Para finalizar con la sección de medidas por especie, nos ha parecido interesante hacer un gráfico de dispersión ligeramente más rico, en el que, además de dos medidas, se distinga por especie y por sexo. Para esto, representamos con colores las especies y con formas el sexo. Para variar respecto a las métricas, hemos representado la longitud del pico en función de la de la aleta:
+
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     color = species,
+                     shape = sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor)) +
+  geom_point() + 
+  labs(title = "Longitud del pico según la de la aleta, por especie y sexo",
+       x = "Longitud del Pico (mm)",
+       y = "Longitud de la Aleta (mm)",
+       shape="Sexo", color="Especie") +
+  scale_color_manual(values=species_colors)
+```
+
+Considerando únicamente la especie, de nuevo están bastante diferenciadas según sus medidas: los Gentoo, como ya sabíamos, tienen la aleta más corta que los otros dos, y los Adelie tienen el pico más corto que los Chinstrap. Además, si nos fijamos en la forma de los puntos, podemos observar que, centrándonos en cada especie, los triángulos se suelen acumular arriba a la derecha y los círculos abajo a la izquierda. Esto nos dice que, por lo general, los machos tienen mayores longitudes de pico y aleta que las hembras. Los valores NA están relativamente dispersos dentro de cada especie.
+
+Habría sido posible añadir formas según el sexo a cada uno de los gráficos que hemos hecho, pero esto habría complicado el entendimiento de todos ellos y consideramos más interesante estudiarlos por separado.
+
+## Comparación de variables según el sexo
+
+Al igual que con la visualización por especie, utilizaremos un gráfico de violín para cada una de las métricas.
+
+::: {layout-ncol="2"}
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = sex, y = bill_length_mm, fill = sex)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
+       title = "Longitud del pico por Sexo") +
+  scale_fill_brewer(palette = "Dark2") +
+  guides(fill=guide_legend(title="Especie"))
+```
+
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = sex, y = bill_depth_mm, fill = sex)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
+       title = "Profundidad del pico por Sexo") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
+```
+
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = sex, y = flipper_length_mm, fill = sex)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
+       title = "Longitud de la aleta por Sexo") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
+```
+
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = sex, y = body_mass_g, fill = sex)) +
+  geom_violin() +
+  geom_boxplot(width=0.2, fill="lightgray") +
+  labs(x = "Especie de Pingüino", y = "Masa corporal (g)",
+       title = "Masa corporal por Sexo") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
+```
+:::
+
+Según el gráfico, parece que los pingüinos presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas. A simple vista, no se reconoce ningún patrón que sigan los pingüinos sin sexo registrado.
+
+Podría ser interesante separar este estudio por especie y estudiar completamente cada una, pero por brevedad nos hemos limitado a realizar un estudio global (además, ya hemos realizado un estudio muy relacionado en el apartado anterior). 
+
+También es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero nos limitaremos a relacionarlo con la especie, mediante el siguiente gráfico:
+
+```{r}
+ggplot(penguins, aes(x = "", fill = sex)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  facet_wrap(~species) +
+  labs(x = NULL, y = NULL,
+       title = " Proporción de sexo por Especie de pingüino") +
+  theme_void() +
+  scale_fill_brewer(palette = "Set2")
+```
+Vemos que en cada especie hay prácticamente la misma cantidad de machos que de hembras, pero que muchos Chinstrap no tienen sexo registrado.
+
+Ahora cambiaremos de enfoque, y a continuación visualizaremos datos de los pingüinos relativos a la isla.
 
 ### Distribución de pingüinos según la isla
 
@@ -249,42 +349,9 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 
 -   Finalmente, en la isla de **Torgersen** solo habitan pingüinos de la especie Adelie.
 
-  
+Esta distribución tan heterogénea de los pingüinos por isla nos indica que, muy posiblemente, no sea interesante estudiar cómo se relaciona esta variable con las demás, pues está muy sesgada por la especie y ya hemos estudiado con detalle esta última.
 
-```{r}
-p <- ggplot(penguins, aes(x = "", fill = sex)) +
-  geom_bar(width = 1) +
-  coord_polar(theta = "y") +
-  facet_wrap(~species) +
-  labs(x = NULL, y = NULL,
-       title = " Proporción de Género por Especie de Pingüino") +
-  theme_void() +
-  scale_fill_brewer(palette = "Set2")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
-  geom_point(aes(color = species)) +
-  labs(x = "Longitud del Pico (mm)", y = "Masa Corporal (g)",
-       title = "Longitud del Pico y Masa Corporal por Especie de Pingüino") +
-  scale_color_brewer(palette = "Set2")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)",
-       title = "Dimensiones del Pico por Especie de Pingüino") +
-  scale_color_brewer(palette = "Set2")
-
-print(p)
-```
-
+Finalmente, nos resta estudiar cómo se relaciona el año con las demás variables.
 
 ```{r}
 ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
@@ -293,7 +360,6 @@ ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
        title = " Año vs. Peso Corporal de Pingüinos") +
   scale_fill_brewer(palette = "Set2")
 ```
-
 
 ```{r}
 ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
@@ -330,4 +396,3 @@ print(p)
 #descarga la foto y pollo en el directori del cartografia
 # instruccion:  ![Descripcion que quieras]{ruta}
 ```
-
