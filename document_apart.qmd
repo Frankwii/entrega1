@@ -332,53 +332,19 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 
 -   Finalmente, en la isla de **Torgersen** sólo habitan pingüinos de la especie Adelie.
 
-```{r}
-# Crea un objeto ggplot
-p <- ggplot(penguins, aes(x = penguins$species, y = penguins$bill_length_mm)) +
-  geom_boxplot() +
-  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Longitud del Pico por Especie de Pingüino")
-print(p)
-```
 En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = bill_length_mm,
                      y = flipper_length_mm,
                      color = species,
-                     shape = sex %>% as.character %>% replace(is.na(.), "NA"))) +
+                     shape = sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor)) +
   geom_point() + 
-  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Longitud del Pico y de la Aleta por Especie y Sexo", shape="Sexo", color="Especie") +
+  labs(title = "Longitud del Pico y de la Aleta por Especie y Sexo",
+       x = "Longitud del Pico (mm)",
+       y = "Longitud de la Aleta (mm)",
+       shape="Sexo", color="Especie") +
   scale_color_manual(values=species_colors)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = species)) +
-  geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia",
-       title = "Gráfico de Barras de la Distribución de Especies")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
-  geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Longitud de la Aleta (mm)",
-       title = "Diagrama de Violín de la Longitud de la Aleta por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
-
-print(p)
-```
-
-```{r}
-p <- ggplot(penguins, aes(x = year, y = flipper_length_mm, color = species)) +
-  geom_line() +
-  labs(x = "Año", y = "Longitud de la Aleta (mm)",
-       title = "Evolución de la Longitud de la Aleta por Especie de Pingüino")
-
-print(p)
 ```
 
 ```{r}
@@ -392,14 +358,15 @@ print(p)
 ```
 
 ```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
-  geom_hex() +
-  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Dispersión de la Longitud del Pico y de la Aleta")
-
-print(p)
+#p <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm)) +
+#  geom_hex() +
+#  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
+#       title = "Dispersión de la Longitud del Pico y de la Aleta")
+#
+#print(p)
 ```
 
+<!--
 ```{r}
 p <- ggplot(penguins, aes(x = "", fill = sex)) +
   geom_bar(width = 1) +
@@ -412,6 +379,7 @@ p <- ggplot(penguins, aes(x = "", fill = sex)) +
 
 print(p)
 ```
+-->
 
 ```{r}
 p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
