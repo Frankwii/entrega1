@@ -217,12 +217,16 @@ Un gráfico de dispersión separado por colores nos permite cumplir ambos objeti
 Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie. Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos al mismo tiempo.
 
 ```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
   geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
        title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
   scale_color_manual(values=species_colors)
 ```
+
+
+Vemos que los datos están bastante agrupados en el sentido que, dado una longitud y 
 
 ### Distribución de pingüinos según la isla
 
