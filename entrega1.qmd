@@ -329,7 +329,6 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 -   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
 
 -   Finalmente, en la isla de **Torgersen** sólo habitan pingüinos de la especie Adelie.
->>>>>>> f72ef4ca761635623c8dbdebecf36e411ec650f9
 
 ```{r}
 # Crea un objeto ggplot
