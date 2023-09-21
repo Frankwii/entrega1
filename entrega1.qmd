@@ -112,6 +112,8 @@ x=table(penguins$year)
 c(x,"NA's"=sum(is.na(penguins$year)))
 ```
 
+<<<<<<< HEAD
+=======
 - **Especie**, cualitativa nominal politómica.
 - **Isla**, cualitativa nominal politómica.
 - **Longitud del pico** (en milímetros), cuantitativa continua (discretizada a $10^{-4}$ metros).
@@ -121,6 +123,7 @@ c(x,"NA's"=sum(is.na(penguins$year)))
 - **Sexo**, cualitativa nominal dicotómica.
 - **Año**, 
 
+>>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
 La unidad muestral de la tabla es un pingüino. Para comprobar que las variables están discretizadas a las unidades que afirmamos, sencillamente hemos observado a qué unidad están redondeadas, y para la variable de peso, hemos utilizado la siguiente instrucción:
 
 ```{r}
@@ -308,8 +311,11 @@ p <- ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 print(p)
 ```
 
+<<<<<<< HEAD
+=======
 :::
 
+>>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
 Veamos en qué islas habitan principalmente las tres especies:
 
 ```{r}
@@ -446,6 +452,8 @@ print(p)
 ```
 
 Tenemos que la especie Gentoo tiene de media una aleta más larga y pesa más que la mayoría de ejemplares de las dos especies restantes.
+<<<<<<< HEAD
+=======
 
 ```{r}
 
@@ -499,3 +507,4 @@ print(p)
 ```
 
 
+>>>>>>> 38bf840297c451fdc6a4eb962c5155e7b7389149
