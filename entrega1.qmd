@@ -152,17 +152,24 @@ library(ggplot2)
 species_colors = c("orange", "purple", "darkcyan")
 ```
 
+## Cruces de variables cualitativas con cuantitativas
 
-## Comparación de las variables cuantitativas según la especie
+En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero comparamos individualmente cada variable
 
+### Comparación de las variables cuantitativas según la especie una a una
+
+Para realizar esta comparación, utilizaremos una gráfica de violín para cada una de las variables cualitativas.
+
+:::{layout-ncol=2}
 ```{r, echo=FALSE}
 
 ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Longitud del Pico por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
+       title = "Longitud del pico por Especie de pingüino") +
+  scale_fill_brewer(palette = "Dark2") +
+  guides(fill=guide_legend(title="Especie"))
 ```
 
 ```{r, echo=FALSE}
@@ -170,8 +177,9 @@ ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
-       title = "Profundidad del Pico por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
+       title = "Profundidad del pico por Especie de pingüino") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
 ```
 
 ```{r, echo=FALSE}
@@ -179,8 +187,9 @@ ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
-       title = "Longitud de la aleta por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
+       title = "Longitud de la aleta por Especie de pingüino") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
 ```
 
 ```{r, echo=FALSE}
@@ -188,11 +197,34 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Peso (g)",
-       title = "Peso por Especie de Pingüino") +
-  scale_fill_brewer(palette = "Dark2")
+       title = "Peso por Especie de pingüino") +
+  scale_fill_brewer(palette = "Dark2")+
+  guides(fill=guide_legend(title="Especie"))
+```
+:::
+
+En estos gráficos observamos un patrón común: Para cada medida, dos especies de pingüino suelen tener una distribución parecida, y la tercera es visiblemente distinta. Concretamente:
+
+- Los pingüinos Adelie son, con diferencia, los que tienen el pico más corto.
+- Los Gentoo tienen, notablemente, el pico más fino, la aleta más larga y el mayor peso.
+
+Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie.
+
+### Comparación de las variables cuantitativas entre ellas y por especie
+
+Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos de esta sección al mismo tiempo.
+
+Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie. Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos al mismo tiempo.
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() + 
+  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
+       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
+  scale_color_manual(values=species_colors)
 ```
 
-## Distribución de pingüinos según la isla
+### Distribución de pingüinos según la isla
 
 Veamos en qué islas habitan principalmente las tres especies:
 
@@ -212,14 +244,6 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 -   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
 
 -   Finalmente, en la isla de **Torgersen** solo habitan pingüinos de la especie Adelie.
-
-```{r}
-ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
-  geom_point() + 
-  labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Longitud del Pico vs. Longitud de la Aleta por Especie de Pingüino") +
-  scale_color_manual(values=species_colors)
-```
 
   
 
@@ -274,7 +298,9 @@ ggplot(penguins, aes(x = year, y = body_mass_g, fill=year)) +
        title = "Peso Corporal Promedio de Pingüinos por Año")
 
 print(p)
+```
 
+```{r}
 ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   geom_violin() +
   geom_boxplot(width=0.2, fill="lightgray") +
