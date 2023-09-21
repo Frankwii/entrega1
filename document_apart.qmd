@@ -342,14 +342,14 @@ print(p)
 ```
 En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
 
-```{r}
+```{r, echo=FALSE}
 ggplot(penguins, aes(x = bill_length_mm,
                      y = flipper_length_mm,
-                     color = species, shape=sex)) +
+                     color = species,
+                     shape = sex %>% as.character %>% replace(is.na(.), "NA"))) +
   geom_point() + 
   labs(x = "Longitud del Pico (mm)", y = "Longitud de la Aleta (mm)",
-       title = "Longitud del Pico y de la Aleta por Especie y Sexo") + 
-  scale_shape_discrete(na.translate = F) +
+       title = "Longitud del Pico y de la Aleta por Especie y Sexo", shape="Sexo", color="Especie") +
   scale_color_manual(values=species_colors)
 ```
 
@@ -499,6 +499,5 @@ print(p)
 #descarga la foto y pollo en el directori del cartografia
 # instruccion:  ![Descripcion que quieras]{ruta}
 ```
-
 
 
