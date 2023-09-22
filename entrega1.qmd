@@ -61,15 +61,6 @@ c(x,"NA's"=sum(is.na(penguins$species)))
 
 Por tanto, de más a menos común, hay pingüinos de las especies *Adelie*, *Gentoo* y *Chinstrap*. No hay pingüinos sin clasificar por su especie.
 
-```{r, echo=FALSE}
-ggplot(penguins, aes(x=species, fill=species)) +
-  geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia",
-       title = "Frecuencias de las Especies de Pingüino") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme(legend.position="none")
-```
-
 ### Isla
 
 Esta variable registra la isla en la que fue encontrado el ejemplar. Es cualitativa nominal politómica.
@@ -80,15 +71,6 @@ c(x,"NA's"=sum(is.na(x)))
 ```
 
 De más a menos cantidad, hay pingüinos en las islas *Biscoe*, *Dream* y *Torgersen*. Tampoco hay ejemplares sin isla registrada.
-
-```{r, echo=FALSE}
-ggplot(penguins, aes(x=island, fill=island)) +
-  geom_bar() +
-  labs(x = "Isla", y = "Frecuencia",
-       title = "Poblaciones de las Islas") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme(legend.position="none")
-```
 
 ### Longitud del pico
 
@@ -105,7 +87,7 @@ estadisticos=summary(penguins$bill_length_mm)
 estadisticos
 ```
 
-El pico más corto mide `r estadisticos[1]` milímetros, y el más largo, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+El pico más corto mide `r estadisticos[1]` milímetros, y el más largo, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm, na.rm=TRUE)`. Además, hay `r estadisticos[7]` valores NA.
 
 ### Profundidad del pico
 
@@ -116,7 +98,7 @@ estadisticos=summary(penguins$bill_depth_mm)
 estadisticos
 ```
 
-El pico más fino mide `r estadisticos[1]` milímetros, y el más grueso, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+El pico más fino mide `r estadisticos[1]` milímetros, y el más grueso, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm, na.rm=TRUE)`. Además, hay `r estadisticos[7]` valores NA.
 
 ### Longitud de la aleta
 
@@ -127,7 +109,7 @@ estadisticos=summary(penguins$flipper_length_mm)
 estadisticos
 ```
 
-La aleta más corta mide `r estadisticos[1]` milímetros, y la más larga, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+La aleta más corta mide `r estadisticos[1]` milímetros, y la más larga, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm, na.rm=TRUE)`. Además, hay `r estadisticos[7]` valores NA.
 
 ### Peso
 
@@ -147,7 +129,7 @@ estadisticos=summary(penguins$body_mass_g)
 estadisticos
 ```
 
-El pingüino más liviano pesa `r estadisticos[1]` gramos, y el más pesado, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm)`. Además, hay `r estadisticos[7]` valores NA.
+El pingüino más liviano pesa `r estadisticos[1]` gramos, y el más pesado, `r estadisticos[6]`. El primer cuartil de esta variable es `r estadisticos[2]`, la mediana `r estadisticos[3]` y el tercero `r estadisticos[5]`. La media es de `r estadisticos[4]` y la desviación típica muestral de `r sd(penguins$bill_length_mm, na.rm=TRUE)`. Además, hay `r estadisticos[7]` valores NA.
 
 ### Sexo
 
@@ -156,16 +138,6 @@ Registra si el pingüino es macho o hembra, salvo en algunos casos en los que no
 ```{r}
 x=table(penguins$sex)
 c(x,"NA's"=sum(is.na(penguins$sex)))
-```
-
-```{r, echo=FALSE}
-Sexo <- penguins$sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor
-
-ggplot(penguins, aes(x=sex, fill=sex)) +
-  geom_bar() +
-  labs(x = "Sexo", y = "Frecuencia",
-       title = "Frecuencias del Sexo del Pingüino") +
-  theme(legend.position="none")
 ```
 
 ### Año
@@ -184,16 +156,13 @@ x=table(penguins$year)
 c(x,"NA's"=sum(is.na(penguins$year)))
 ```
 
-```{r, echo=FALSE}
-ggplot(penguins, aes(x=year)) +
-  geom_bar() +
-  labs(x = "Año", y = "Frecuencia") +
-  theme(legend.position="none")
-```
+Se ha tomado, aproximadamente, el mismo número de muestras en cada año.
 
-## Cruces de variables cualitativas con cuantitativas
+Una vez discutidas individualmente las variables, estudiaremos algunos datos demográficos, como la distribución de pingüinos por isla
 
-En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero comparamos individualmente cada variable
+## Variables cuantitativas por especie
+
+En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero visualizamos individualmente cada variable.
 
 ### Comparación de las variables cuantitativas según la especie una a una
 
@@ -258,9 +227,8 @@ Una vez visualizadas individualmente, puede ser interesante intentar, por un lad
 ggplot(penguins, aes(x = bill_length_mm,
                      y = bill_depth_mm,
                      color = species)) +
-  geom_point(aes(shape=Sexo)) +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)", color = "Especie", shape = "Sexo",
+  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)", color = "Especie",
        title = "Dimensiones del Pico por Especie de Pingüino") +
   scale_color_manual(values=species_colors)
 ```
@@ -273,10 +241,9 @@ Además de esta gráfica, es posible hacer ${{4}\choose{2}} =6$ gráficos simila
 ggplot(penguins, aes(x = body_mass_g,
                      y = flipper_length_mm,
                      color = species)) +
-  geom_point(aes(shape = Sexo)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Masa Corporal (g)", y = "Longitud del Pico (mm)",
-       title = "Longitud del Pico y Masa Corporal por Especie y Sexo de Pingüino", color = "Especie", shape = "Sexo") +
+       title = "Longitud del Pico y Masa Corporal por Especie y Sexo de Pingüino", color = "Especie") +
   scale_color_manual(values=species_colors)
 ```
 
@@ -338,7 +305,7 @@ ggplot(na.omit(penguins), aes(x = species, y = body_mass_g, fill = sex)) +
 
 :::
 
-Según el gráfico, parece que los pingüinos presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas.
+Según los gráficos, parece que las tres especies presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas.
 
 También es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero nos limitaremos a relacionarlo con la especie, mediante el siguiente gráfico:
 
@@ -425,6 +392,8 @@ Por otra parte, en la isla de Torgersen sólo hay pinguinos de la especie Adelie
 
 ## Comparación de las variables por año del estudio
 
+### Comparación de métricas por año
+
 Finalmente, nos resta estudiar cómo se relaciona el año con las demás variables.
 
 :::{layout-ncol=2}
@@ -469,17 +438,16 @@ ggplot(penguins, aes(x = as.factor(year), y = body_mass_g, fill = as.factor(year
 
 En cuanto al año en el que se produjo el estudio, no podemos apreciar diferencias notables en ninguna variable respecto al año.
 
-## Conclusión 
+## Conclusión y resumen
 
-El conjunto de datos "penguins" es una fuente de información sobre tres especies de pingüinos diferentes: Adelie, Gentoo y Chinstrap. Estas especies habitan en tres islas diferentes: Torgersen, Biscoe y Dream. El conjunto de datos ofrece una variedad de medidas corporales, como la longitud y profundidad del pico, la longitud de la aleta y el peso corporal, lo que proporciona una visión detallada de las características físicas de estos pingüinos. Además, nos proporciona información sobre el sexo y el año en que fue tomada cada muestra. 
+El conjunto de datos "penguins" es una fuente de información sobre tres especies de pingüinos diferentes: Adelie, Gentoo y Chinstrap. Estas especies habitan en tres islas diferentes: Torgersen, Biscoe y Dream. El conjunto de datos ofrece una variedad de medidas corporales, como la longitud y profundidad del pico, la longitud de la aleta y el peso corporal, lo que proporciona una visión detallada de las características físicas de estos pingüinos. Además, nos proporciona información sobre el sexo del pingüino y el año en que fue tomada cada muestra. 
 
 Una de las observaciones clave al explorar este conjunto de datos es la presencia de diferencias significativas entre las especies en términos de medidas corporales. Por ejemplo, los pingüinos Gentoo tienden a ser más grandes que las otras dos especies en cuanto a longitud de la aleta y peso corporal. Además, los pingüinos Adelie son los que tienen la longitud del pico más corta. 
 
 Además de las diferencias entre especies, el conjunto de datos también muestra variabilidad en la distribución de las especies por isla. Por ejemplo, en la isla Torgersen solo habitan los pingüinos de la especie Adelie. Mientrás que en la isla Biscoe no encontramos la especie Chinstrap y en la isla Dream no observamos la especie Gentoo. 
 
-El aspecto temporal se incorpora mediante el año en que se tomaron las medidas. No obstante, en nuestro estudio no hemos encontrado diferencias notables en las características de los pingüínos. 
+El aspecto temporal se incorpora mediante el año en que se tomaron las medidas. No obstante, en nuestro estudio no hemos encontrado diferencias notables en las características de los pingüínos respecto al año. 
 
 Además, observamos claras diferencias físicas entre los machos y las hembras: los machos suelen ser más grandes que las hembras. 
 
-En resumen, el conjunto de datos "penguins" proporciona una valiosa información de estas especies de pingüinos, sus medidas corporales y su distribución geográfica. De esta forma, se pueden investigar las diferencias entre estas especies.
-
+Otro dato a tener en cuenta es que, en general, los datos presentan pocos outliers, y los que hay no tienen valores exageradamente distintos al resto. Teniendo esto en cuenta, y el hecho de que hay cierta variedad en los tipos de variables y en cómo se relacionan (a veces una variable influye en otras, y a veces no), hace que este conjunto de datos sea útil como conjunto de datos "test" en distintas aplicaciones de la estadística, así como lo hace el celebrado conjunto de datos *iris*.
