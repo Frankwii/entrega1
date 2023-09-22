@@ -16,12 +16,11 @@ Instalamos los paquetes que vamos a necesitar:
 ```{r, eval=FALSE}
 install.packages("palmerpenguins")
 install.packages("ggplot2")
-install.packages("stat_binhex")
 install.packages("corrplot")
 install.packages("tidyr")
 ```
 
-```{r}
+```{r,echo=FALSE}
 library(palmerpenguins)
 library(ggplot2)
 library(corrplot)
@@ -36,7 +35,7 @@ En primer lugar, visualizaremos el conjunto de datos.
 
 ```{r}
 library(palmerpenguins)
-penguins %>% str
+str(penguins)
 ```
 
 ```{r, echo=FALSE}
@@ -158,13 +157,59 @@ c(x,"NA's"=sum(is.na(penguins$year)))
 
 Se ha tomado, aproximadamente, el mismo número de muestras en cada año.
 
-Una vez discutidas individualmente las variables, estudiaremos algunos datos demográficos, como la distribución de pingüinos por isla
+Una vez discutidas individualmente las variables, estudiaremos algunos datos demográficos, como la distribución de sexo por especie y de especie por isla:
+
+## Datos demográficos
+
+Es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero por brevedad nos limitaremos a relacionarlo con la especie.
+
+En los gráficos de abajo se puede apreciar la proporción de pinguinos de las distintas especies en cada isla:
+
+```{r, echo=FALSE}
+Sexo <- penguins$sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor
+ggplot(penguins, aes(x = "", fill = Sexo)) +
+  geom_bar(position = "fill", width = 1) +
+  coord_polar(theta = "y") +
+  facet_wrap(~species) +
+  labs(x = NULL, y = NULL,
+       title = " Proporción de sexo por Especie de pingüino") +
+  theme_void() +
+  scale_fill_brewer(labels=c("Hembra", "Macho", "NA"), palette = "Set2")
+```
+
+Vemos que en cada especie hay prácticamente la misma cantidad de machos que de hembras.
+
+### Distribución de pingüinos según la isla
+
+```{r, echo=FALSE}
+ggplot(penguins, aes(fill=island, x="")) +
+  geom_bar(position="fill", width=1) +
+  coord_polar(theta = "y") +
+  facet_wrap(~species) +
+  theme_void() +
+  labs(x = "Especie de Pingüino", y = "Frecuencia", fill = "Isla",
+       title = "Distribución de la población por isla y especie")
+```
+
+Vemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está solo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas.
+
+Se puede observar que en función de la isla que tratemos, habitan pingüinos de una especie u otra:
+
+-   En la isla de **Biscoe** habitan todos los pingüinos de la especie Gentoo y también hay algunos de la especie Adelie, pero no hay de la especie Chinstrap.
+
+-   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
+
+-   Finalmente, en la isla de **Torgersen** solo habitan pingüinos de la especie Adelie.
+
+Esta distribución tan heterogénea de los pingüinos por isla nos indica que, muy posiblemente, las conclusiones que podamos extraer a partir de cómo se relaciona la isla con las demás variables sea similar a las que se puedan extraer a partir de cómo se relacionan con la especie, pues está muy sesgada por esta última.
+
+Una vez visualizados algunos datos demográficos, estudiaremos cómo se relacionan las variables cuantitativas entre ellas y con las demás.
 
 ## Variables cuantitativas por especie
 
 En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero visualizamos individualmente cada variable.
 
-### Comparación de las variables cuantitativas según la especie una a una
+### Comparación una a una
 
 Para realizar esta comparación, utilizaremos una gráfica de violín para cada una de las variables cualitativas.
 
@@ -217,7 +262,7 @@ En estos gráficos observamos un patrón común: Para cada medida, dos especies 
 
 Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie.
 
-### Comparación de las variables cuantitativas entre ellas y por especie
+### Comparación entre ellas y por especie
 
 Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos de esta sección al mismo tiempo.
 
@@ -227,6 +272,7 @@ Una vez visualizadas individualmente, puede ser interesante intentar, por un lad
 ggplot(penguins, aes(x = bill_length_mm,
                      y = bill_depth_mm,
                      color = species)) +
+  geom_point()+
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)", color = "Especie",
        title = "Dimensiones del Pico por Especie de Pingüino") +
@@ -241,6 +287,7 @@ Además de esta gráfica, es posible hacer ${{4}\choose{2}} =6$ gráficos simila
 ggplot(penguins, aes(x = body_mass_g,
                      y = flipper_length_mm,
                      color = species)) +
+  geom_point()+
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Masa Corporal (g)", y = "Longitud del Pico (mm)",
        title = "Longitud del Pico y Masa Corporal por Especie y Sexo de Pingüino", color = "Especie") +
@@ -252,6 +299,8 @@ Observamos que, con estas variables, es difícil diferenciar a los Adelie de los
 Para finalizar con la sección de medidas por especie, nos ha parecido interesante hacer un gráfico de dispersión ligeramente más rico, en el que, además de dos medidas, se distinga por especie y por sexo. Para esto, representamos con colores las especies y con formas el sexo. Para variar respecto a las métricas, hemos representado la longitud del pico en función de la de la aleta:
 
 ```{r, echo=FALSE}
+Sexo <- penguins$sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor
+
 ggplot(penguins, aes(x = bill_length_mm,
                      y = flipper_length_mm,
                      color = species)) +
@@ -266,9 +315,9 @@ ggplot(penguins, aes(x = bill_length_mm,
 
 Considerando únicamente la especie, de nuevo están bastante diferenciadas según sus medidas: los Gentoo, como ya sabíamos, tienen la aleta más corta que los otros dos, y los Adelie tienen el pico más corto que los Chinstrap. Además, si nos fijamos en la forma de los puntos, podemos observar que, centrándonos en cada especie, los triángulos se suelen acumular arriba a la derecha y los círculos abajo a la izquierda. Esto nos dice que, por lo general, los machos tienen mayores longitudes de pico y aleta que las hembras. Los valores NA están relativamente dispersos dentro de cada especie.
 
-Habría sido posible añadir formas según el sexo a cada uno de los gráficos que hemos hecho, pero esto habría complicado el entendimiento de todos ellos y consideramos más interesante estudiarlos por separado.
+Habría sido posible añadir formas según el sexo a cada uno de los gráficos que hemos hecho, pero esto habría complicado el entendimiento de todos ellos y consideramos más interesante estudiarlos por separado, y es lo que haremos en la siguiente sección.
 
-## Comparación de variables según el sexo
+## Diferencias entre pingüinos según el sexo
 
 Al igual que con la visualización por especie, utilizaremos un gráfico de violín para cada una de las métricas.
 
@@ -307,43 +356,9 @@ ggplot(na.omit(penguins), aes(x = species, y = body_mass_g, fill = sex)) +
 
 Según los gráficos, parece que las tres especies presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas.
 
-También es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero nos limitaremos a relacionarlo con la especie, mediante el siguiente gráfico:
+Podríamos cruzar métricas y visualizar gráficos de dispersión similares a los que se han mostrado anteriormente por especie, pero las diferencias son claras estudiando las métricas una a una, y tal estudio no aportaría demasiada información adicional. Consideramos más interesante estudiar cómo se relacionan las variables cuantitativas con las isla y con el año.
 
-```{r, echo=FALSE}
-ggplot(penguins, aes(x = "", fill = Sexo)) +
-  geom_bar(width = 1) +
-  facet_wrap(~species) +
-  labs(x = NULL, y = NULL,
-       title = " Proporción de sexo por Especie de pingüino") +
-  theme_void() +
-  scale_fill_brewer(palette = "Set2")
-```
-Vemos que en cada especie hay prácticamente la misma cantidad de machos que de hembras, pero que muchos Chinstrap no tienen sexo registrado.
-
-Ahora cambiaremos de enfoque, y a continuación visualizaremos datos de los pingüinos relativos a la isla.
-
-### Distribución de pingüinos según la isla
-
-Veamos en qué islas habitan principalmente las tres especies:
-
-```{r, echo=FALSE}
-ggplot(penguins, aes(fill=island, x=species)) +
-  geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia", fill = "Isla",
-       title = "Distribución de la población por isla y especie")
-```
-
-Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está solo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y, como ya sabíamos, es la que tiene una mayor población total de pingüinos.
-
-Se puede observar que en función de la isla que tratemos, habitan más pingüinos de una especie u otra:
-
--   En la isla de **Biscoe** habitan todos los pingüinos de la especie Gentoo y también hay algunos de la especie Adelie, pero no hay de la especie Chinstrap.
-
--   En la isla de **Dream** cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.
-
--   Finalmente, en la isla de **Torgersen** solo habitan pingüinos de la especie Adelie.
-
-Esta distribución tan heterogénea de los pingüinos por isla nos indica que, muy posiblemente, no sea interesante estudiar cómo se relaciona esta variable con las demás, pues está muy sesgada por la especie y ya hemos estudiado con detalle esta última. En los gráficos de abajo se puede apreciar la influencia de la proporción de pinguinos de las distintas especies en cada isla:
+## Variables cuantitativas por isla
 
 :::{layout-ncol=2}
 
@@ -390,11 +405,9 @@ En los diagramas anteriores, podemos observar que los pinguinos de la isla de Bi
 
 Por otra parte, en la isla de Torgersen sólo hay pinguinos de la especie Adelie, lo cual se ve reflejado en que los ejemplares de esta isla tienen un pico más corto que los de las otras islas.
 
-## Comparación de las variables por año del estudio
+En último lugar, visualizaremos las variables cualitativas en función del año:
 
-### Comparación de métricas por año
-
-Finalmente, nos resta estudiar cómo se relaciona el año con las demás variables.
+## Métricas por año
 
 :::{layout-ncol=2}
 
@@ -433,13 +446,11 @@ ggplot(penguins, aes(x = as.factor(year), y = body_mass_g, fill = as.factor(year
        title = "Diagrama de Violín del Peso por Año") +
   scale_fill_brewer(palette = "Dark2")
 ```
-
 :::
 
-En cuanto al año en el que se produjo el estudio, no podemos apreciar diferencias notables en ninguna variable respecto al año.
+No podemos apreciar diferencias notables en ninguna variable cuantitativa respecto al año. 
 
 ## Conclusión y resumen
-
 El conjunto de datos "penguins" es una fuente de información sobre tres especies de pingüinos diferentes: Adelie, Gentoo y Chinstrap. Estas especies habitan en tres islas diferentes: Torgersen, Biscoe y Dream. El conjunto de datos ofrece una variedad de medidas corporales, como la longitud y profundidad del pico, la longitud de la aleta y el peso corporal, lo que proporciona una visión detallada de las características físicas de estos pingüinos. Además, nos proporciona información sobre el sexo del pingüino y el año en que fue tomada cada muestra. 
 
 Una de las observaciones clave al explorar este conjunto de datos es la presencia de diferencias significativas entre las especies en términos de medidas corporales. Por ejemplo, los pingüinos Gentoo tienden a ser más grandes que las otras dos especies en cuanto a longitud de la aleta y peso corporal. Además, los pingüinos Adelie son los que tienen la longitud del pico más corta. 
@@ -450,4 +461,4 @@ El aspecto temporal se incorpora mediante el año en que se tomaron las medidas.
 
 Además, observamos claras diferencias físicas entre los machos y las hembras: los machos suelen ser más grandes que las hembras. 
 
-Otro dato a tener en cuenta es que, en general, los datos presentan pocos outliers, y los que hay no tienen valores exageradamente distintos al resto. Teniendo esto en cuenta, y el hecho de que hay cierta variedad en los tipos de variables y en cómo se relacionan (a veces una variable influye en otras, y a veces no), hace que este conjunto de datos sea útil como conjunto de datos "test" en distintas aplicaciones de la estadística, así como lo hace el celebrado conjunto de datos *iris*.
+Un hecho a tener en cuenta es que, en general, los datos presentan pocos outliers, y los que hay no tienen valores exageradamente distintos al resto. Esto, sumado al hecho de que hay cierta variedad en los tipos de variables y en cómo se relacionan (a veces una variable influye en otras, y a veces no), hace que este conjunto de datos sea útil como conjunto de datos "test" en distintas aplicaciones de la estadística, así como lo hace el celebrado conjunto de datos *iris*.

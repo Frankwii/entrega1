@@ -123,17 +123,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#sexo" id="toc-sexo" class="nav-link" data-scroll-target="#sexo">Sexo</a></li>
   <li><a href="#año" id="toc-año" class="nav-link" data-scroll-target="#año">Año</a></li>
   </ul></li>
-  <li><a href="#cruces-cuantitativas-por-especie" id="toc-cruces-cuantitativas-por-especie" class="nav-link" data-scroll-target="#cruces-cuantitativas-por-especie">Cruces cuantitativas por especie</a>
-  <ul class="collapse">
-  <li><a href="#comparación-de-las-variables-cuantitativas-según-la-especie-una-a-una" id="toc-comparación-de-las-variables-cuantitativas-según-la-especie-una-a-una" class="nav-link" data-scroll-target="#comparación-de-las-variables-cuantitativas-según-la-especie-una-a-una">Comparación de las variables cuantitativas según la especie una a una</a></li>
-  <li><a href="#comparación-de-las-variables-cuantitativas-entre-ellas-y-por-especie" id="toc-comparación-de-las-variables-cuantitativas-entre-ellas-y-por-especie" class="nav-link" data-scroll-target="#comparación-de-las-variables-cuantitativas-entre-ellas-y-por-especie">Comparación de las variables cuantitativas entre ellas y por especie</a></li>
-  </ul></li>
-  <li><a href="#comparación-de-variables-según-el-sexo" id="toc-comparación-de-variables-según-el-sexo" class="nav-link" data-scroll-target="#comparación-de-variables-según-el-sexo">Comparación de variables según el sexo</a>
+  <li><a href="#datos-demográficos" id="toc-datos-demográficos" class="nav-link" data-scroll-target="#datos-demográficos">Datos demográficos</a>
   <ul class="collapse">
   <li><a href="#distribución-de-pingüinos-según-la-isla" id="toc-distribución-de-pingüinos-según-la-isla" class="nav-link" data-scroll-target="#distribución-de-pingüinos-según-la-isla">Distribución de pingüinos según la isla</a></li>
   </ul></li>
-  <li><a href="#comparación-de-las-variables-por-año-del-estudio" id="toc-comparación-de-las-variables-por-año-del-estudio" class="nav-link" data-scroll-target="#comparación-de-las-variables-por-año-del-estudio">Comparación de las variables por año del estudio</a></li>
-  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  <li><a href="#variables-cuantitativas-por-especie" id="toc-variables-cuantitativas-por-especie" class="nav-link" data-scroll-target="#variables-cuantitativas-por-especie">Variables cuantitativas por especie</a>
+  <ul class="collapse">
+  <li><a href="#comparación-una-a-una" id="toc-comparación-una-a-una" class="nav-link" data-scroll-target="#comparación-una-a-una">Comparación una a una</a></li>
+  <li><a href="#comparación-entre-ellas-y-por-especie" id="toc-comparación-entre-ellas-y-por-especie" class="nav-link" data-scroll-target="#comparación-entre-ellas-y-por-especie">Comparación entre ellas y por especie</a></li>
+  </ul></li>
+  <li><a href="#diferencias-entre-pingüinos-según-el-sexo" id="toc-diferencias-entre-pingüinos-según-el-sexo" class="nav-link" data-scroll-target="#diferencias-entre-pingüinos-según-el-sexo">Diferencias entre pingüinos según el sexo</a></li>
+  <li><a href="#variables-cuantitativas-por-isla" id="toc-variables-cuantitativas-por-isla" class="nav-link" data-scroll-target="#variables-cuantitativas-por-isla">Variables cuantitativas por isla</a></li>
+  <li><a href="#métricas-por-año" id="toc-métricas-por-año" class="nav-link" data-scroll-target="#métricas-por-año">Métricas por año</a></li>
+  <li><a href="#conclusión-y-resumen" id="toc-conclusión-y-resumen" class="nav-link" data-scroll-target="#conclusión-y-resumen">Conclusión y resumen</a></li>
   </ul>
 </nav>
 </div>
@@ -168,24 +170,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"palmerpenguins"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"stat_binhex"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"corrplot"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"corrplot"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>species_colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"purple"</span>, <span class="st">"darkcyan"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
 <section id="exploración-inicial-y-descripción-de-variables." class="level2">
 <h2 class="anchored" data-anchor-id="exploración-inicial-y-descripción-de-variables.">Exploración inicial y descripción de variables.</h2>
 <p>En primer lugar, visualizaremos el conjunto de datos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> str</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> str</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [344 × 8] (S3: tbl_df/tbl/data.frame)
  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -208,37 +204,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Esta variable registra la especie del ejemplar. Es cualitativa nominal politómica.</p>
 <p>Hemos visto ya en la descripción del tibble que hay tres especies de pingüino. Para ver qué especies son y cuántos ejemplares hay de cada una, utilizamos el siguiente codigo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>species)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>species)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>species)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>species)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Adelie Chinstrap    Gentoo      NA's 
       152        68       124         0 </code></pre>
 </div>
 </div>
 <p>Por tanto, de más a menos común, hay pingüinos de las especies <em>Adelie</em>, <em>Gentoo</em> y <em>Chinstrap</em>. No hay pingüinos sin clasificar por su especie.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
 <section id="isla" class="level3">
 <h3 class="anchored" data-anchor-id="isla">Isla</h3>
 <p>Esta variable registra la isla en la que fue encontrado el ejemplar. Es cualitativa nominal politómica.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>island)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>island)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Biscoe     Dream Torgersen      NA's 
       168       124        52         0 </code></pre>
 </div>
 </div>
 <p>De más a menos cantidad, hay pingüinos en las islas <em>Biscoe</em>, <em>Dream</em> y <em>Torgersen</em>. Tampoco hay ejemplares sin isla registrada.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
 <section id="longitud-del-pico" class="level3">
 <h3 class="anchored" data-anchor-id="longitud-del-pico">Longitud del pico</h3>
@@ -280,8 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="peso">Peso</h3>
 <p>Es cuantitativa continua, está expresada en gramos y discretizada a los múltiplos de 5 gramos. Para ver que, efectivamente, esa es la discretización, hemos utilizado el siguiente código:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pesos<span class="ot">=</span><span class="fu">na.omit</span>(penguins<span class="sc">$</span>body_mass_g)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pesos<span class="sc">%%</span><span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pesos<span class="ot">=</span><span class="fu">na.omit</span>(penguins<span class="sc">$</span>body_mass_g)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pesos<span class="sc">%%</span><span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
@@ -300,16 +286,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="sexo">Sexo</h3>
 <p>Registra si el pingüino es macho o hembra, salvo en algunos casos en los que no se determinó. Es cualitativa nominal dicotómica.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>sex)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>sex)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>sex)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>sex)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>female   male   NA's 
    165    168     11 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -317,8 +298,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="año">Año</h3>
 <p>El año en el que se realizó el registro del pingüino. Esta variable es ordinal, pero R asigna a esta variable el tipo <code>int</code>, pues sus valores son números enteros. En realidad se trata de un factor ordenado. Podemos arreglar esto con el siguiente código:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>year<span class="ot">=</span><span class="fu">factor</span>(penguins<span class="sc">$</span>year, <span class="at">ordered=</span><span class="cn">TRUE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> str</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">$</span>year<span class="ot">=</span><span class="fu">factor</span>(penguins<span class="sc">$</span>year, <span class="at">ordered=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> str</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [344 × 8] (S3: tbl_df/tbl/data.frame)
  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -333,28 +314,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Ahora sí tiene el tipo adecuado.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>year)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>year)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">table</span>(penguins<span class="sc">$</span>year)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x,<span class="st">"NA's"</span><span class="ot">=</span><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins<span class="sc">$</span>year)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2007 2008 2009 NA's 
  110  114  120    0 </code></pre>
 </div>
 </div>
 <p>Se ha tomado, aproximadamente, el mismo número de muestras en cada año.</p>
+<p>Una vez discutidas individualmente las variables, estudiaremos algunos datos demográficos, como la distribución de sexo por especie y de especie por isla:</p>
+</section>
+</section>
+<section id="datos-demográficos" class="level2">
+<h2 class="anchored" data-anchor-id="datos-demográficos">Datos demográficos</h2>
+<p>Es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero por brevedad nos limitaremos a relacionarlo con la especie.</p>
+<p>En los gráficos de abajo se puede apreciar la proporción de pinguinos de las distintas especies en cada isla:</p>
 <div class="cell">
+<div class="cell-output-display">
+<p><img src="entrega1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Vemos que en cada especie hay prácticamente la misma cantidad de machos que de hembras.</p>
+<section id="distribución-de-pingüinos-según-la-isla" class="level3">
+<h3 class="anchored" data-anchor-id="distribución-de-pingüinos-según-la-isla">Distribución de pingüinos según la isla</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="entrega1_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Vemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está solo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas.</p>
+<p>Se puede observar que en función de la isla que tratemos, habitan pingüinos de una especie u otra:</p>
+<ul>
+<li><p>En la isla de <strong>Biscoe</strong> habitan todos los pingüinos de la especie Gentoo y también hay algunos de la especie Adelie, pero no hay de la especie Chinstrap.</p></li>
+<li><p>En la isla de <strong>Dream</strong> cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.</p></li>
+<li><p>Finalmente, en la isla de <strong>Torgersen</strong> solo habitan pingüinos de la especie Adelie.</p></li>
+</ul>
+<p>Esta distribución tan heterogénea de los pingüinos por isla nos indica que, muy posiblemente, las conclusiones que podamos extraer a partir de cómo se relaciona la isla con las demás variables sea similar a las que se puedan extraer a partir de cómo se relacionan con la especie, pues está muy sesgada por esta última.</p>
+<p>Una vez visualizados algunos datos demográficos, estudiaremos cómo se relacionan las variables cuantitativas entre ellas y con las demás.</p>
+</section>
+</section>
+<section id="variables-cuantitativas-por-especie" class="level2">
+<h2 class="anchored" data-anchor-id="variables-cuantitativas-por-especie">Variables cuantitativas por especie</h2>
+<p>En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero visualizamos individualmente cada variable.</p>
+<section id="comparación-una-a-una" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-una-a-una">Comparación una a una</h3>
+<p>Para realizar esta comparación, utilizaremos una gráfica de violín para cada una de las variables cualitativas.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display">
+<p><img src="entrega1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
 <p><img src="entrega1_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-</section>
-<section id="cruces-cuantitativas-por-especie" class="level2">
-<h2 class="anchored" data-anchor-id="cruces-cuantitativas-por-especie">Cruces cuantitativas por especie</h2>
-<p>En primer lugar, consideramos que puede ser interesante comparar las distintas medidas de los pingüinos entre especies. Para esto, primero visualizamos individualmente cada variable.</p>
-<section id="comparación-de-las-variables-cuantitativas-según-la-especie-una-a-una" class="level3">
-<h3 class="anchored" data-anchor-id="comparación-de-las-variables-cuantitativas-según-la-especie-una-a-una">Comparación de las variables cuantitativas según la especie una a una</h3>
-<p>Para realizar esta comparación, utilizaremos una gráfica de violín para cada una de las variables cualitativas.</p>
-<div class="quarto-layout-panel">
+</div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
@@ -367,18 +384,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
 </div>
 <p>En estos gráficos observamos un patrón común: Para cada medida, dos especies de pingüino suelen tener una distribución parecida, y la tercera es visiblemente distinta. Concretamente:</p>
 <ul>
@@ -387,37 +392,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie.</p>
 </section>
-<section id="comparación-de-las-variables-cuantitativas-entre-ellas-y-por-especie" class="level3">
-<h3 class="anchored" data-anchor-id="comparación-de-las-variables-cuantitativas-entre-ellas-y-por-especie">Comparación de las variables cuantitativas entre ellas y por especie</h3>
+<section id="comparación-entre-ellas-y-por-especie" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-entre-ellas-y-por-especie">Comparación entre ellas y por especie</h3>
 <p>Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos de esta sección al mismo tiempo.</p>
 <p>Una vez visualizadas individualmente, puede ser interesante intentar, por un lado, cruzar las medidas entre ellas y, por el otro, relacionar esto con la especie. Un gráfico de dispersión separado por colores nos permite cumplir ambos objetivos al mismo tiempo.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="entrega1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Vemos que los datos están bastante agrupados en el sentido que, dada una longitud y profundidad de pico, es posible inferir a qué especie de pingüino pertenece el hipotético espécimen: los Gentoo tienen el pico más largo y fino; los Adelie, más grueso y corto; y los Chinstrap se encuentran en un punto intermedio. Además, salvo en los pingüinos Adelie, los datos se ajustan medianamente bien a la recta de regresión de su especie.</p>
 <p>Además de esta gráfica, es posible hacer <span class="math inline">\({{4}\choose{2}} =6\)</span> gráficos similares (en el sentido de explicar una medida en función de la otra), pero por motivos de brevedad representaremos únicamente la longitud de la aleta en función del peso.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="entrega1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Observamos que, con estas variables, es difícil diferenciar a los Adelie de los Chinstrap, pero los Gentoo son claramente distintos, pues tienen, sensiblemente, la aleta más larga y una masa corporal mayor. De nuevo, excepto para los Adelie, los datos se ajustan medianamente bien a la recta de regresión.</p>
 <p>Para finalizar con la sección de medidas por especie, nos ha parecido interesante hacer un gráfico de dispersión ligeramente más rico, en el que, además de dos medidas, se distinga por especie y por sexo. Para esto, representamos con colores las especies y con formas el sexo. Para variar respecto a las métricas, hemos representado la longitud del pico en función de la de la aleta:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<p><img src="entrega1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Considerando únicamente la especie, de nuevo están bastante diferenciadas según sus medidas: los Gentoo, como ya sabíamos, tienen la aleta más corta que los otros dos, y los Adelie tienen el pico más corto que los Chinstrap. Además, si nos fijamos en la forma de los puntos, podemos observar que, centrándonos en cada especie, los triángulos se suelen acumular arriba a la derecha y los círculos abajo a la izquierda. Esto nos dice que, por lo general, los machos tienen mayores longitudes de pico y aleta que las hembras. Los valores NA están relativamente dispersos dentro de cada especie.</p>
-<p>Habría sido posible añadir formas según el sexo a cada uno de los gráficos que hemos hecho, pero esto habría complicado el entendimiento de todos ellos y consideramos más interesante estudiarlos por separado.</p>
+<p>Habría sido posible añadir formas según el sexo a cada uno de los gráficos que hemos hecho, pero esto habría complicado el entendimiento de todos ellos y consideramos más interesante estudiarlos por separado, y es lo que haremos en la siguiente sección.</p>
 </section>
 </section>
-<section id="comparación-de-variables-según-el-sexo" class="level2">
-<h2 class="anchored" data-anchor-id="comparación-de-variables-según-el-sexo">Comparación de variables según el sexo</h2>
+<section id="diferencias-entre-pingüinos-según-el-sexo" class="level2">
+<h2 class="anchored" data-anchor-id="diferencias-entre-pingüinos-según-el-sexo">Diferencias entre pingüinos según el sexo</h2>
 <p>Al igual que con la visualización por especie, utilizaremos un gráfico de violín para cada una de las métricas.</p>
 <div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display">
+<p><img src="entrega1_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display">
+<p><img src="entrega1_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
@@ -430,6 +447,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+</div>
+<p>Según los gráficos, parece que las tres especies presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas.</p>
+<p>Podríamos cruzar métricas y visualizar gráficos de dispersión similares a los que se han mostrado anteriormente por especie, pero las diferencias son claras estudiando las métricas una a una, y tal estudio no aportaría demasiada información adicional. Consideramos más interesante estudiar cómo se relacionan las variables cuantitativas con las isla y con el año.</p>
+</section>
+<section id="variables-cuantitativas-por-isla" class="level2">
+<h2 class="anchored" data-anchor-id="variables-cuantitativas-por-isla">Variables cuantitativas por isla</h2>
+<div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
@@ -442,32 +466,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-</div>
-<p>Según el gráfico, parece que los pingüinos presentan dimorfismo sexual: los machos suelen ser más grandes que las hembras respecto a todas las medidas.</p>
-<p>También es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero nos limitaremos a relacionarlo con la especie, mediante el siguiente gráfico:</p>
-<div class="cell">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
 <p><img src="entrega1_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Vemos que en cada especie hay prácticamente la misma cantidad de machos que de hembras, pero que muchos Chinstrap no tienen sexo registrado.</p>
-<p>Ahora cambiaremos de enfoque, y a continuación visualizaremos datos de los pingüinos relativos a la isla.</p>
-<section id="distribución-de-pingüinos-según-la-isla" class="level3">
-<h3 class="anchored" data-anchor-id="distribución-de-pingüinos-según-la-isla">Distribución de pingüinos según la isla</h3>
-<p>Veamos en qué islas habitan principalmente las tres especies:</p>
-<div class="cell">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="cell-output-display">
 <p><img src="entrega1_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Tenemos que la especie Gentoo se encuentra únicamente en la isla Biscoe y Chinstrap está solo en Dream. Por otra parte, Adelie se puede encontrar en las tres islas y, como ya sabíamos, es la que tiene una mayor población total de pingüinos.</p>
-<p>Se puede observar que en función de la isla que tratemos, habitan más pingüinos de una especie u otra:</p>
-<ul>
-<li><p>En la isla de <strong>Biscoe</strong> habitan todos los pingüinos de la especie Gentoo y también hay algunos de la especie Adelie, pero no hay de la especie Chinstrap.</p></li>
-<li><p>En la isla de <strong>Dream</strong> cohabitan pingüinos de las especies Adelie y Chinstrap, y es la isla en la que habitan todos los pingüinos de esta última especie.</p></li>
-<li><p>Finalmente, en la isla de <strong>Torgersen</strong> solo habitan pingüinos de la especie Adelie.</p></li>
-</ul>
-<p>Esta distribución tan heterogénea de los pingüinos por isla nos indica que, muy posiblemente, no sea interesante estudiar cómo se relaciona esta variable con las demás, pues está muy sesgada por la especie y ya hemos estudiado con detalle esta última. En los gráficos de abajo se puede apreciar la influencia de la proporción de pinguinos de las distintas especies en cada isla:</p>
+</div>
+</div>
+<p>En los diagramas anteriores, podemos observar que los pinguinos de la isla de Biscoe tienen un pico menos produnfo, una aleta más larga y pesan más. Esto se debe a que todos los ejemplares de la especie Gentoo habitan en esta isla y que tres de cada cuatro pinguinos de Biscoe son de esta especie.</p>
+<p>Por otra parte, en la isla de Torgersen sólo hay pinguinos de la especie Adelie, lo cual se ve reflejado en que los ejemplares de esta isla tienen un pico más corto que los de las otras islas.</p>
+<p>En último lugar, visualizaremos las variables cualitativas en función del año:</p>
+</section>
+<section id="métricas-por-año" class="level2">
+<h2 class="anchored" data-anchor-id="métricas-por-año">Métricas por año</h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -494,49 +511,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>En los diagramas anteriores, podemos observar que los pinguinos de la isla de Biscoe tienen un pico menos produnfo, una aleta más larga y pesan más. Esto se debe a que todos los ejemplares de la especie Gentoo habitan en esta isla y que tres de cada cuatro pinguinos de Biscoe son de esta especie.</p>
-<p>Por otra parte, en la isla de Torgersen sólo hay pinguinos de la especie Adelie, lo cual se ve reflejado en que los ejemplares de esta isla tienen un pico más corto que los de las otras islas.</p>
+<p>No podemos apreciar diferencias notables en ninguna variable cuantitativa respecto al año.</p>
 </section>
-</section>
-<section id="comparación-de-las-variables-por-año-del-estudio" class="level2">
-<h2 class="anchored" data-anchor-id="comparación-de-las-variables-por-año-del-estudio">Comparación de las variables por año del estudio</h2>
-<p>Finalmente, nos resta estudiar cómo se relaciona el año con las demás variables.</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img src="entrega1_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-</div>
-<p>En cuanto al año en el que se produjo el estudio, no podemos apreciar diferencias notables en ninguna variable respecto al año.</p>
-</section>
-<section id="conclusión" class="level2">
-<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
-<p>El conjunto de datos “penguins” es una fuente de información sobre tres especies de pingüinos diferentes: Adelie, Gentoo y Chinstrap. Estas especies habitan en tres islas diferentes: Torgersen, Biscoe y Dream. El conjunto de datos ofrece una variedad de medidas corporales, como la longitud y profundidad del pico, la longitud de la aleta y el peso corporal, lo que proporciona una visión detallada de las características físicas de estos pingüinos. Además, nos proporciona información sobre el sexo y el año en que fue tomada cada muestra.</p>
+<section id="conclusión-y-resumen" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión-y-resumen">Conclusión y resumen</h2>
+<p>El conjunto de datos “penguins” es una fuente de información sobre tres especies de pingüinos diferentes: Adelie, Gentoo y Chinstrap. Estas especies habitan en tres islas diferentes: Torgersen, Biscoe y Dream. El conjunto de datos ofrece una variedad de medidas corporales, como la longitud y profundidad del pico, la longitud de la aleta y el peso corporal, lo que proporciona una visión detallada de las características físicas de estos pingüinos. Además, nos proporciona información sobre el sexo del pingüino y el año en que fue tomada cada muestra.</p>
 <p>Una de las observaciones clave al explorar este conjunto de datos es la presencia de diferencias significativas entre las especies en términos de medidas corporales. Por ejemplo, los pingüinos Gentoo tienden a ser más grandes que las otras dos especies en cuanto a longitud de la aleta y peso corporal. Además, los pingüinos Adelie son los que tienen la longitud del pico más corta.</p>
 <p>Además de las diferencias entre especies, el conjunto de datos también muestra variabilidad en la distribución de las especies por isla. Por ejemplo, en la isla Torgersen solo habitan los pingüinos de la especie Adelie. Mientrás que en la isla Biscoe no encontramos la especie Chinstrap y en la isla Dream no observamos la especie Gentoo.</p>
-<p>El aspecto temporal se incorpora mediante el año en que se tomaron las medidas. No obstante, en nuestro estudio no hemos encontrado diferencias notables en las características de los pingüínos.</p>
+<p>El aspecto temporal se incorpora mediante el año en que se tomaron las medidas. No obstante, en nuestro estudio no hemos encontrado diferencias notables en las características de los pingüínos respecto al año.</p>
 <p>Además, observamos claras diferencias físicas entre los machos y las hembras: los machos suelen ser más grandes que las hembras.</p>
-<p>En resumen, el conjunto de datos “penguins” proporciona una valiosa información de estas especies de pingüinos, sus medidas corporales y su distribución geográfica. De esta forma, se pueden investigar las diferencias entre estas especies.</p>
+<p>Un hecho a tener en cuenta es que, en general, los datos presentan pocos outliers, y los que hay no tienen valores exageradamente distintos al resto. Esto, sumado al hecho de que hay cierta variedad en los tipos de variables y en cómo se relacionan (a veces una variable influye en otras, y a veces no), hace que este conjunto de datos sea útil como conjunto de datos “test” en distintas aplicaciones de la estadística, así como lo hace el celebrado conjunto de datos <em>iris</em>.</p>
 </section>
 
 </main>
