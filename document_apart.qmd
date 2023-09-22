@@ -147,13 +147,12 @@ table(penguins$species)
 ```
 
 ```{r}
-p <- ggplot(penguins, aes(x=species, fill=species)) +
+ggplot(penguins, aes(x=species, fill=species)) +
   geom_bar() +
   labs(x = "Especie de Pingüino", y = "Frecuencia",
        title = "Frecuencias de las Especies de Pingüino") +
   scale_fill_brewer(palette = "Dark2") +
   theme(legend.position="none")
-print(p)
 ```
 
 
@@ -166,13 +165,12 @@ table(penguins$island)
 ```
 
 ```{r}
-p <- ggplot(penguins, aes(x=island, fill=island)) +
+ggplot(penguins, aes(x=island, fill=island)) +
   geom_bar() +
   labs(x = "Isla", y = "Frecuencia",
        title = "Poblaciones de las Islas") +
   scale_fill_brewer(palette = "Dark2") +
   theme(legend.position="none")
-print(p)
 ```
 
 ### Longitud del pico
@@ -234,12 +232,11 @@ table(penguins$sex)
 ```
 
 ```{r}
-p <- ggplot(na.omit(penguins), aes(x=sex, fill=sex)) +
+ggplot(penguins, aes(x=sex, fill=sex)) +
   geom_bar() +
   labs(x = "Sexo", y = "Frecuencia",
        title = "Frecuencias del Sexo del Pingüino") +
   theme(legend.position="none")
-print(p)
 ```
 
 
@@ -252,11 +249,10 @@ table(penguins$year)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(penguins, aes(x=year)) +
+ggplot(penguins, aes(x=year)) +
   geom_bar() +
   labs(x = "Año", y = "Frecuencia") +
   theme(legend.position="none")
-print(p)
 ```
 
 
@@ -272,8 +268,6 @@ ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
        title = "Diagrama de Violín de la Longitud del Pico por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
@@ -329,10 +323,11 @@ Se puede observar que en función de la isla que tratemos, habitan más pingüin
 En el siguiente gráfico se puede comprobar que la especie Gentoo tiene la aleta media más larga, y Adelie tiene el pico medio más corto.
 
 ```{r, echo=FALSE}
+Sexo <- penguins$sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor
 ggplot(penguins, aes(x = bill_length_mm,
                      y = flipper_length_mm,
                      color = species)) +
-  geom_point(aes(shape = sex %>% as.character %>% replace(is.na(.), "NA") %>% as.factor)) +
+  geom_point(aes(shape = Sexo)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(title = "Longitud del Pico y de la Aleta por Especie y Sexo",
        x = "Longitud del Pico (mm)",
@@ -375,85 +370,70 @@ print(p)
 ```
 -->
 
-```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g, color = species)) +
-  geom_point() +
+```{r, echo=FALSE}
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = body_mass_g,
+                     color = species)) +
+  geom_point(aes(shape = Sexo)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Longitud del Pico (mm)", y = "Masa Corporal (g)",
-       title = "Longitud del Pico y Masa Corporal por Especie de Pingüino") +
-  scale_color_brewer(palette = "Set2")
-
-print(p)
+       title = "Longitud del Pico y Masa Corporal por Especie de Pingüino", color = "Especie", shape = "Sexo") +
+  scale_color_manual(values=species_colors)
 ```
 
 ```{r}
-p <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
-  geom_point() +
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+                     color = species)) +
+  geom_point(aes(shape=Sexo)) +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)",
+  labs(x = "Longitud del Pico (mm)", y = "Profundidad del Pico (mm)", color = "Especie", shape = "Sexo",
        title = "Dimensiones del Pico por Especie de Pingüino") +
-  scale_color_brewer(palette = "Set2")
-
-print(p)
+  scale_color_manual(values=species_colors)
 ```
 
 ```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, size = bill_length_mm, color = species)) +
+ggplot(penguins, aes(x = flipper_length_mm,
+                     y = body_mass_g,
+                     size = bill_length_mm,
+                     color = species)) +
   geom_point(alpha = 0.7) +
   scale_size_continuous(range = c(3, 10)) +
   labs(x = "Longitud de la Aleta (mm)", y = "Peso Corporal (g)",
        title = "Longitud de Aleta vs. Peso Corporal vs. Tamaño del Pico por Especie de Pingüino")
-
-print(p)
 ```
 
 Tenemos que la especie Gentoo tiene de media una aleta más larga y pesa más que la mayoría de ejemplares de las dos especies restantes.
 
 ```{r}
 
-p <- ggplot(penguins, aes(x = island, fill = species)) +
+ggplot(penguins, aes(x = island, fill = species)) +
   geom_bar() +
   labs(x = "Isla", y = "Número de Especies",
        title = "Número de Especies por Isla") +
   scale_fill_brewer(palette = "Set2")
-
-print(p)
 ```
 ```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
+ggplot(penguins, aes(x = year, y = body_mass_g)) +
   geom_point() +
   labs(x = "Año", y = "Peso Corporal (g)",
        title = " Año vs. Peso Corporal de Pingüinos")
-
-print(p)
 ```
 
 ```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = year, y = body_mass_g)) +
+ggplot(penguins, aes(x = year, y = body_mass_g)) +
   geom_bar(stat = "summary", fun = "mean", fill = "skyblue") +
   labs(x = "Año", y = "Peso Corporal Promedio (g)",
        title = "Peso Corporal Promedio de Pingüinos por Año")
-
-print(p)
 ```
 FRANK LO DE LOS PESOS UNA MIERDA QUITALO
 
 ```{r}
-library(ggplot2)
-
-p <- ggplot(penguins, aes(x = interaction(species, island), y = bill_length_mm)) +
+ggplot(penguins, aes(x = interaction(species, island), y = bill_length_mm)) +
   geom_bar(stat = "summary", fun = "mean", fill = "skyblue", position = "dodge") +
   labs(x = "Especie e Isla", y = "Longitud del Pico Promedio (mm)",
        title = "Longitud del Pico Promedio por Combinación de Especie e Isla") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-print(p)
 ```
 
 ```{r}
@@ -465,46 +445,40 @@ print(p)
 
 ## Comparación de las variables según la especie y el sexo
 
+Si por cada especie separamos los ejemplares también por sexo, podemos notar algunas diferencias significativas:
+
 :::{layout-ncol=2}
 
 ```{r, echo=FALSE}
-p <- ggplot(na.omit(penguins), aes(x = species, y = bill_length_mm, fill = sex)) +
+ggplot(na.omit(penguins), aes(x = species, y = bill_length_mm, fill = sex)) +
   geom_violin() +
   labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
        title = "Diagrama de Violín de la Longitud del Pico por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(na.omit(penguins), aes(x = species, y = bill_depth_mm, fill = sex)) +
+ggplot(na.omit(penguins), aes(x = species, y = bill_depth_mm, fill = sex)) +
   geom_violin() +
   labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
        title = "Diagrama de Violín de la Profundidad del Pico por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(na.omit(penguins), aes(x = species, y = flipper_length_mm, fill = sex)) +
+ggplot(na.omit(penguins), aes(x = species, y = flipper_length_mm, fill = sex)) +
   geom_violin() +
   labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
        title = "Diagrama de Violín de la Longitud de la aleta por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 ```{r, echo=FALSE}
-p <- ggplot(na.omit(penguins), aes(x = species, y = body_mass_g, fill = sex)) +
+ggplot(na.omit(penguins), aes(x = species, y = body_mass_g, fill = sex)) +
   geom_violin() +
   labs(x = "Especie de Pingüino", y = "Peso (g)",
        title = "Diagrama de Violín del Peso por Especie de Pingüino") +
   scale_fill_brewer(palette = "Dark2")
-
-print(p)
 ```
 
 
