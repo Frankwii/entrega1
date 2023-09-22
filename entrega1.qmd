@@ -36,9 +36,13 @@ En primer lugar, visualizaremos el conjunto de datos.
 
 ```{r}
 library(palmerpenguins)
-str(penguins)
+penguins %>% str
+```
+
+```{r, echo=FALSE}
 nrows<-nrow(penguins)
 ```
+
 
 El estudio se realizó escogiendo datos de tres especies distintas de pingüino en tres islas distintas del archipiélago Palmer, en la Antártida. Por tanto, la unidad muestral de la tabla es un pingüino.
 
@@ -338,7 +342,7 @@ Según el gráfico, parece que los pingüinos presentan dimorfismo sexual: los m
 
 También es sensato comprobar qué relación hay entre el sexo y las demás variables cualitativas (¿El año o la isla están sesgados por el sexo? ¿Las especies presentan una distribución 50/50 de machos y hembras?), pero nos limitaremos a relacionarlo con la especie, mediante el siguiente gráfico:
 
-```{r}
+```{r, echo=FALSE}
 ggplot(penguins, aes(x = "", fill = Sexo)) +
   geom_bar(width = 1) +
   facet_wrap(~species) +
@@ -355,7 +359,7 @@ Ahora cambiaremos de enfoque, y a continuación visualizaremos datos de los ping
 
 Veamos en qué islas habitan principalmente las tres especies:
 
-```{r}
+```{r, echo=FALSE}
 ggplot(penguins, aes(fill=island, x=species)) +
   geom_bar() +
   labs(x = "Especie de Pingüino", y = "Frecuencia",
