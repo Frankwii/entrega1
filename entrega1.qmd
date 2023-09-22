@@ -202,7 +202,7 @@ Para realizar esta comparación, utilizaremos una gráfica de violín para cada 
 ::: {layout-ncol="2"}
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
        title = "Longitud del pico por Especie de pingüino") +
@@ -212,7 +212,7 @@ ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
        title = "Profundidad del pico por Especie de pingüino") +
@@ -222,7 +222,7 @@ ggplot(penguins, aes(x = species, y = bill_depth_mm, fill = species)) +
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
        title = "Longitud de la aleta por Especie de pingüino") +
@@ -232,7 +232,7 @@ ggplot(penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
   labs(x = "Especie de Pingüino", y = "Masa corporal (g)",
        title = "Masa corporal por Especie de pingüino") +
@@ -310,28 +310,28 @@ Al igual que con la visualización por especie, utilizaremos un gráfico de viol
 ```{r, echo=FALSE}
 ggplot(na.omit(penguins), aes(x = species, y = bill_length_mm, fill = sex)) +
   geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
+  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)", fill = "Sexo",
        title = "Diagrama de Violín de la Longitud del Pico por Especie de Pingüino")
 ```
 
 ```{r, echo=FALSE}
 ggplot(na.omit(penguins), aes(x = species, y = bill_depth_mm, fill = sex)) +
   geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
+  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)", fill = "Sexo",
        title = "Diagrama de Violín de la Profundidad del Pico por Especie de Pingüino")
 ```
 
 ```{r, echo=FALSE}
 ggplot(na.omit(penguins), aes(x = species, y = flipper_length_mm, fill = sex)) +
   geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
+  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)", fill = "Sexo",
        title = "Diagrama de Violín de la Longitud de la aleta por Especie de Pingüino")
 ```
 
 ```{r, echo=FALSE}
 ggplot(na.omit(penguins), aes(x = species, y = body_mass_g, fill = sex)) +
   geom_violin() +
-  labs(x = "Especie de Pingüino", y = "Peso (g)",
+  labs(x = "Especie de Pingüino", y = "Peso (g)", fill = "Sexo",
        title = "Diagrama de Violín del Peso por Especie de Pingüino")
 ```
 
@@ -362,7 +362,7 @@ Veamos en qué islas habitan principalmente las tres especies:
 ```{r, echo=FALSE}
 ggplot(penguins, aes(fill=island, x=species)) +
   geom_bar() +
-  labs(x = "Especie de Pingüino", y = "Frecuencia",
+  labs(x = "Especie de Pingüino", y = "Frecuencia", fill = "Isla",
        title = "Distribución de la población por isla y especie")
 ```
 
@@ -382,38 +382,38 @@ Esta distribución tan heterogénea de los pingüinos por isla nos indica que, m
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = island, y = bill_length_mm, fill = island)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Diagrama de Violín de la Longitud del Pico por Año", fill="year") + 
+  labs(x = "Isla", y = "Longitud del Pico (mm)", fill = "Isla",
+       title = "Diagrama de Violín de la Longitud del Pico por Isla", fill="Isla") + 
   scale_fill_brewer(palette = "Dark2")
 ```
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = island, y = bill_depth_mm, fill = island)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
-       title = "Diagrama de Violín de la Profundidad del Pico por Año", fill="year") +
+  labs(x = "Isla", y = "Profundidad del Pico (mm)",
+       title = "Diagrama de Violín de la Profundidad del Pico por Isla", fill="Isla") +
   scale_fill_brewer(palette = "Dark2")
 ```
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = island, y = flipper_length_mm, fill = island)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
-       title = "Diagrama de Violín del Peso por Año", fill="year") +
+  labs(x = "Isla", y = "Longitud de la Aleta (mm)",
+       title = "Diagrama de Violín de la Longitud de la Aleta por Isla", fill = "Isla") +
   scale_fill_brewer(palette = "Dark2")
 ```
 
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = island, y = body_mass_g, fill = island)) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Peso (g)",
-       title = "Diagrama de Violín del Peso por Año") +
+  labs(x = "Isla", y = "Peso (g)", fill = "Isla",
+       title = "Diagrama de Violín del Peso por Isla") +
   scale_fill_brewer(palette = "Dark2")
 ```
 
@@ -431,36 +431,36 @@ Finalmente, nos resta estudiar cómo se relaciona el año con las demás variabl
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = as.factor(year), y = bill_length_mm, fill = as.factor(year))) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Longitud del Pico (mm)",
-       title = "Diagrama de Violín de la Longitud del Pico por Año", fill="year") + 
+  labs(x = "Año", y = "Longitud del Pico (mm)",
+       title = "Diagrama de Violín de la Longitud del Pico por Año", fill="Año") + 
   scale_fill_brewer(palette = "Dark2")
 ```
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = as.factor(year), y = bill_depth_mm, fill = as.factor(year))) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Profundidad del Pico (mm)",
-       title = "Diagrama de Violín de la Profundidad del Pico por Año", fill="year") +
+  labs(x = "Año", y = "Profundidad del Pico (mm)",
+       title = "Diagrama de Violín de la Profundidad del Pico por Año", fill="Año") +
   scale_fill_brewer(palette = "Dark2")
 ```
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = as.factor(year), y = flipper_length_mm, fill = as.factor(year))) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Longitud de la aleta (mm)",
-       title = "Diagrama de Violín del Peso por Año", fill="year") +
+  labs(x = "Año", y = "Longitud de la Aleta (mm)",
+       title = "Diagrama de Violín de la Longitud de la Aleta por Año", fill="Año") +
   scale_fill_brewer(palette = "Dark2")
 ```
 
 ```{r, echo=FALSE}
 ggplot(penguins, aes(x = as.factor(year), y = body_mass_g, fill = as.factor(year))) +
-  geom_violin() +
+  geom_violin(show.legend = FALSE) +
   geom_boxplot(width=0.2, fill="lightgray") +
-  labs(x = "Especie de Pingüino", y = "Peso (g)",
+  labs(x = "Año", y = "Peso (g)", fill = "Año",
        title = "Diagrama de Violín del Peso por Año") +
   scale_fill_brewer(palette = "Dark2")
 ```
